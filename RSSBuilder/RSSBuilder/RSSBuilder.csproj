@@ -1,0 +1,428 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{184C2713-EBB7-416C-A194-1010EA8106FD}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>App.ico</ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>RSSBuilder</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>RSSBuilder</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <ManifestCertificateThumbprint>07FD207811D7EA655190D9DC6256EAC844D62B7D</ManifestCertificateThumbprint>
+    <ManifestKeyFile>RSSBuilder_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>false</GenerateManifests>
+    <SignManifests>true</SignManifests>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetZone>LocalIntranet</TargetZone>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <PublishUrl>C:\Documents and Settings\W. Bokkers\My Documents\Visual Studio Projects\RSSBuilder\Publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <SupportUrl>http://home.hetnet.nl/~bsoft/rssbuilder/</SupportUrl>
+    <ProductName>RSS Builder</ProductName>
+    <PublisherName>B!Soft</PublisherName>
+    <WebPage>publish.htm</WebPage>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationVersion>2.1.8.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE;NET20</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlEditor">
+      <Name>htmleditor</Name>
+      <HintPath>.\htmleditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.mshtml">
+      <Name>Microsoft.mshtml</Name>
+      <HintPath>.\Microsoft.mshtml.dll</HintPath>
+      <AssemblyFolderKey>hklm\primary interop assemblies</AssemblyFolderKey>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.ico" />
+    <Content Include="BlueBoxes.css" />
+    <Content Include="GreyBoxes.css" />
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Encryption.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormFTPDownload.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormFTPPublish.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormFTPSites.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormFTPUploadEnclosure.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormFTPUploadEnclosure.Designer.cs">
+      <DependentUpon>FormFTPUploadEnclosure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormHTMLEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormRSSBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormSaveHTML.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormShowXml.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FTPSessionParameters.cs" />
+    <Compile Include="ftp\FileTransferException.cs" />
+    <Compile Include="ftp\FTPActiveDataSocket.cs" />
+    <Compile Include="ftp\FTPClient.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ftp\FTPConnection.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ftp\FTPControlSocket.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ftp\FTPDataSocket.cs" />
+    <Compile Include="ftp\FTPException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ftp\FTPFile.cs" />
+    <Compile Include="ftp\FTPFileFactory.cs" />
+    <Compile Include="ftp\FTPFileParser.cs" />
+    <Compile Include="ftp\FTPPassiveDataSocket.cs" />
+    <Compile Include="ftp\FTPReply.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ftp\FTPTypes.cs" />
+    <Compile Include="ftp\IFileTransferClient.cs" />
+    <Compile Include="ftp\net\BaseSocket.cs" />
+    <Compile Include="ftp\net\HostNameResolver.cs" />
+    <Compile Include="ftp\UnixFileParser.cs" />
+    <Compile Include="ftp\util\debug\Appender.cs" />
+    <Compile Include="ftp\util\debug\FileAppender.cs" />
+    <Compile Include="ftp\util\debug\Level.cs" />
+    <Compile Include="ftp\util\debug\Logger.cs" />
+    <Compile Include="ftp\util\debug\StandardOutputAppender.cs" />
+    <Compile Include="ftp\util\debug\TraceAppender.cs" />
+    <Compile Include="ftp\util\StringSplitter.cs" />
+    <Compile Include="ftp\VMSFileParser.cs" />
+    <Compile Include="ftp\WindowsFileParser.cs" />
+    <Compile Include="RSS2HTML.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MessageStrings\RSSBuilderStrings.de.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RSSBuilderStrings.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="MessageStrings\RSSBuilderStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RSSBuilderStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="MessageStrings\RSSBuilderStrings.nl.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RSSBuilderStrings.nl.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RSS\RSSFeed.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RSS\RSSItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="XmlConfig.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Forms\FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFTPDownload.cs.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormFTPDownload.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFTPDownload.da.resx">
+      <DependentUpon>FormFTPDownload.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFTPDownload.de.resx">
+      <DependentUpon>FormFTPDownload.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFTPDownload.nl.resx">
+      <DependentUpon>FormFTPDownload.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFTPDownload.resx">
+      <DependentUpon>FormFTPDownload.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFTPPublish.cs.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormFTPPublish.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFTPPublish.de.resx">
+      <DependentUpon>FormFTPPublish.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFTPPublish.nl.resx">
+      <DependentUpon>FormFTPPublish.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFTPPublish.resx">
+      <DependentUpon>FormFTPPublish.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFTPSites.cs.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormFTPSites.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFTPSites.de.resx">
+      <DependentUpon>FormFTPSites.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFTPSites.nl.resx">
+      <DependentUpon>FormFTPSites.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFTPSites.resx">
+      <DependentUpon>FormFTPSites.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFTPUploadEnclosure.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormFTPUploadEnclosure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormHTMLEdit.cs.resx">
+      <DependentUpon>FormHTMLEdit.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormHTMLEdit.de.resx">
+      <DependentUpon>FormHTMLEdit.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormHTMLEdit.nl.resx">
+      <DependentUpon>FormHTMLEdit.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormHTMLEdit.resx">
+      <DependentUpon>FormHTMLEdit.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormInput.resx">
+      <DependentUpon>FormInput.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormRSSBuilder.cs.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormRSSBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormRSSBuilder.de.resx">
+      <DependentUpon>FormRSSBuilder.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormRSSBuilder.nl.resx">
+      <DependentUpon>FormRSSBuilder.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormRSSBuilder.resx">
+      <DependentUpon>FormRSSBuilder.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSaveHTML.cs.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormSaveHTML.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSaveHTML.de.resx">
+      <DependentUpon>FormSaveHTML.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSaveHTML.nl.resx">
+      <DependentUpon>FormSaveHTML.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSaveHTML.resx">
+      <DependentUpon>FormSaveHTML.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormShowXml.de.resx">
+      <DependentUpon>FormShowXml.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormShowXml.nl.resx">
+      <DependentUpon>FormShowXml.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormShowXml.resx">
+      <DependentUpon>FormShowXml.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageStrings\RSSBuilderStrings.de.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>RSSBuilderStrings.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageStrings\RSSBuilderStrings.nl.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>RSSBuilderStrings.nl.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageStrings\RSSBuilderStrings.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>RSSBuilderStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BaseApplicationManifest Include="Properties\app.manifest" />
+    <None Include="RSSBuilder_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="cs\RSSBuilder.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="de\RSSBuilder.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.mshtml">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="nl\RSSBuilder.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
