@@ -20,7 +20,7 @@ namespace RSSBuilder
 	/// </summary>
    public class FormRSSBuilder : System.Windows.Forms.Form
    {
-      private ResourceManager _res = new ResourceManager("RSSBuilder.RSSBuilderStrings", typeof(FormRSSBuilder).Assembly);
+       private ResourceManager _res = new ResourceManager("RSSBuilder.MessageStrings.RSSBuilderStrings", typeof(FormRSSBuilder).Assembly);
       private static string _dateTimeFormat = "ddd, d MMM yyyy HH:mm:ss";
       private RSSFeed _rssFeed = null;
       private bool   _changed = false;
@@ -166,6 +166,10 @@ namespace RSSBuilder
       private Button btnUploadEnclosure;
       private ToolStripSeparator toolStripSeparator3;
       private ToolStripButton btnDonate;
+      private ComboBox cmbHubs;
+      private Label lblHub;
+      private TextBox textBoxFeedURL;
+      private Label lblFeedURL;
       private System.ComponentModel.IContainer components;
 
       #endregion Form control declarations
@@ -321,6 +325,9 @@ namespace RSSBuilder
 
          textBoxTitle.Text = _rssFeed.Title;
          textBoxWebURL.Text = _rssFeed.WebURL;
+         textBoxFeedURL.Text = _rssFeed.FeedURL;
+         cmbHubs.SelectedIndex = cmbHubs.FindString(_rssFeed.HubURL);
+         
          textBoxCopyright.Text = _rssFeed.Copyright;
          comboBoxLanguage.SelectedIndex = comboBoxLanguage.FindString(_rssFeed.Language);
          textBoxEditor.Text = _rssFeed.Editor;
@@ -448,7 +455,7 @@ namespace RSSBuilder
          newItem.Selected = true;
 
          dateTimePicker.ResetText();
-         newRSSItem.PubDate = dateTimePicker.Value.ToString(_dateTimeFormat);
+         newRSSItem.PubDate = dateTimePicker.Value.ToString(_dateTimeFormat, CultureInfo.CreateSpecificCulture("en-US")); // RFC822 date-time, e.g. name of day of week regardless of locale language
 
          TimeZone tz = TimeZone.CurrentTimeZone;
          int hourOffset = tz.GetUtcOffset(DateTime.Now).Hours;
@@ -654,473 +661,477 @@ namespace RSSBuilder
       /// </summary>
       private void InitializeComponent()
       {
-         this.components = new System.ComponentModel.Container();
-         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRSSBuilder));
-         this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
-         this.panelContent = new System.Windows.Forms.Panel();
-         this.panelRight = new System.Windows.Forms.Panel();
-         this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-         this.listViewItems = new System.Windows.Forms.ListView();
-         this.columnTitle = new System.Windows.Forms.ColumnHeader();
-         this.columnDate = new System.Windows.Forms.ColumnHeader();
-         this.tabControl = new System.Windows.Forms.TabControl();
-         this.tabPageGeneral = new System.Windows.Forms.TabPage();
-         this.panelItemProperties = new System.Windows.Forms.Panel();
-         this.buttonUseLinkAsGuid = new System.Windows.Forms.Button();
-         this.textCategory = new System.Windows.Forms.TextBox();
-         this.label18 = new System.Windows.Forms.Label();
-         this.buttonHTML = new System.Windows.Forms.Button();
-         this.textComments = new System.Windows.Forms.TextBox();
-         this.label15 = new System.Windows.Forms.Label();
-         this.buttonLocalOffset = new System.Windows.Forms.Button();
-         this.numTimeOffset = new System.Windows.Forms.NumericUpDown();
-         this.label13 = new System.Windows.Forms.Label();
-         this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
-         this.textAuthor = new System.Windows.Forms.TextBox();
-         this.textLink = new System.Windows.Forms.TextBox();
-         this.textTitle = new System.Windows.Forms.TextBox();
-         this.label5 = new System.Windows.Forms.Label();
-         this.textDesc = new System.Windows.Forms.TextBox();
-         this.label4 = new System.Windows.Forms.Label();
-         this.label3 = new System.Windows.Forms.Label();
-         this.label2 = new System.Windows.Forms.Label();
-         this.label1 = new System.Windows.Forms.Label();
-         this.tabPageEnclosure = new System.Windows.Forms.TabPage();
-         this.btnUploadEnclosure = new System.Windows.Forms.Button();
-         this.labelWait = new System.Windows.Forms.Label();
-         this.label28 = new System.Windows.Forms.Label();
-         this.label27 = new System.Windows.Forms.Label();
-         this.label26 = new System.Windows.Forms.Label();
-         this.linkDetermineFromURL = new System.Windows.Forms.LinkLabel();
-         this.label24 = new System.Windows.Forms.Label();
-         this.comboEnclosureType = new System.Windows.Forms.ComboBox();
-         this.label23 = new System.Windows.Forms.Label();
-         this.textEnclosureLength = new System.Windows.Forms.TextBox();
-         this.label22 = new System.Windows.Forms.Label();
-         this.textEnclosureUrl = new System.Windows.Forms.TextBox();
-         this.label21 = new System.Windows.Forms.Label();
-         this.tabPageAdvanced = new System.Windows.Forms.TabPage();
-         this.tableLayoutPanelAdvanced = new System.Windows.Forms.TableLayoutPanel();
-         this.labelGUID = new System.Windows.Forms.Label();
-         this.textGUID = new System.Windows.Forms.TextBox();
-         this.checkPermaLink = new System.Windows.Forms.CheckBox();
-         this.toolStripItems = new System.Windows.Forms.ToolStrip();
-         this.btnAddItem = new System.Windows.Forms.ToolStripButton();
-         this.btnDeleteItem = new System.Windows.Forms.ToolStripButton();
-         this.btnMoveUpItem = new System.Windows.Forms.ToolStripButton();
-         this.btnMoveDownItem = new System.Windows.Forms.ToolStripButton();
-         this.splitterV = new System.Windows.Forms.Splitter();
-         this.panelLeft = new System.Windows.Forms.Panel();
-         this.groupBox3 = new System.Windows.Forms.GroupBox();
-         this.label20 = new System.Windows.Forms.Label();
-         this.comboStyleType = new System.Windows.Forms.ComboBox();
-         this.textBoxStyleSheet = new System.Windows.Forms.TextBox();
-         this.label19 = new System.Windows.Forms.Label();
-         this.groupBox2 = new System.Windows.Forms.GroupBox();
-         this.textBoxImgHeight = new System.Windows.Forms.TextBox();
-         this.textBoxImgWidth = new System.Windows.Forms.TextBox();
-         this.textBoxImgURL = new System.Windows.Forms.TextBox();
-         this.label14 = new System.Windows.Forms.Label();
-         this.label16 = new System.Windows.Forms.Label();
-         this.label17 = new System.Windows.Forms.Label();
-         this.groupBox1 = new System.Windows.Forms.GroupBox();
-         this.comboBoxLanguage = new System.Windows.Forms.ComboBox();
-         this.textBoxDescription = new System.Windows.Forms.TextBox();
-         this.textBoxWebmaster = new System.Windows.Forms.TextBox();
-         this.textBoxEditor = new System.Windows.Forms.TextBox();
-         this.textBoxCopyright = new System.Windows.Forms.TextBox();
-         this.textBoxWebURL = new System.Windows.Forms.TextBox();
-         this.textBoxTitle = new System.Windows.Forms.TextBox();
-         this.label6 = new System.Windows.Forms.Label();
-         this.label8 = new System.Windows.Forms.Label();
-         this.label7 = new System.Windows.Forms.Label();
-         this.label10 = new System.Windows.Forms.Label();
-         this.label11 = new System.Windows.Forms.Label();
-         this.label12 = new System.Windows.Forms.Label();
-         this.label9 = new System.Windows.Forms.Label();
-         this.statusBar = new System.Windows.Forms.StatusBar();
-         this.toolStrip = new System.Windows.Forms.ToolStrip();
-         this.btnNew = new System.Windows.Forms.ToolStripButton();
-         this.btnSave = new System.Windows.Forms.ToolStripButton();
-         this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-         this.btnOpen = new System.Windows.Forms.ToolStripButton();
-         this.btnPreview = new System.Windows.Forms.ToolStripButton();
-         this.btnDownload = new System.Windows.Forms.ToolStripButton();
-         this.btnPublish = new System.Windows.Forms.ToolStripButton();
-         this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-         this.btnSiteManager = new System.Windows.Forms.ToolStripButton();
-         this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-         this.btnDonate = new System.Windows.Forms.ToolStripButton();
-         this.imageList = new System.Windows.Forms.ImageList(this.components);
-         this.mainMenu = new System.Windows.Forms.MainMenu(this.components);
-         this.menuItemFile = new System.Windows.Forms.MenuItem();
-         this.menuItemNew = new System.Windows.Forms.MenuItem();
-         this.menuItemOpen = new System.Windows.Forms.MenuItem();
-         this.menuItemSave = new System.Windows.Forms.MenuItem();
-         this.menuItemSaveAs = new System.Windows.Forms.MenuItem();
-         this.menuItem1 = new System.Windows.Forms.MenuItem();
-         this.menuItemDownloadFeed = new System.Windows.Forms.MenuItem();
-         this.menuItemPublishFeed = new System.Windows.Forms.MenuItem();
-         this.menuItem9 = new System.Windows.Forms.MenuItem();
-         this.menuItemSaveAsHTML = new System.Windows.Forms.MenuItem();
-         this.menuItem12 = new System.Windows.Forms.MenuItem();
-         this.menuItemExit = new System.Windows.Forms.MenuItem();
-         this.menuItem2 = new System.Windows.Forms.MenuItem();
-         this.menuItemAddTopic = new System.Windows.Forms.MenuItem();
-         this.menuItemDeleteTopic = new System.Windows.Forms.MenuItem();
-         this.menuItemTopicUp = new System.Windows.Forms.MenuItem();
-         this.menuItemTopicDown = new System.Windows.Forms.MenuItem();
-         this.menuItem5 = new System.Windows.Forms.MenuItem();
-         this.menuItemViewToolBar = new System.Windows.Forms.MenuItem();
-         this.menuItemViewFeedProp = new System.Windows.Forms.MenuItem();
-         this.menuItem8 = new System.Windows.Forms.MenuItem();
-         this.menuItemViewXml = new System.Windows.Forms.MenuItem();
-         this.menuItemSettings = new System.Windows.Forms.MenuItem();
-         this.menuItemSiteManager = new System.Windows.Forms.MenuItem();
-         this.menuItem7 = new System.Windows.Forms.MenuItem();
-         this.menuItemEnglish = new System.Windows.Forms.MenuItem();
-         this.menuItemGerman = new System.Windows.Forms.MenuItem();
-         this.menuItemDutch = new System.Windows.Forms.MenuItem();
-         this.menuItemCzech = new System.Windows.Forms.MenuItem();
-         this.menuItem6 = new System.Windows.Forms.MenuItem();
-         this.menuItemAbout = new System.Windows.Forms.MenuItem();
-         this.menuItemRSSBuilderWeb = new System.Windows.Forms.MenuItem();
-         this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-         this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-         this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-         this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-         this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-         this.openEnclosureDialog = new System.Windows.Forms.OpenFileDialog();
-         this.toolStripContainer.ContentPanel.SuspendLayout();
-         this.toolStripContainer.TopToolStripPanel.SuspendLayout();
-         this.toolStripContainer.SuspendLayout();
-         this.panelContent.SuspendLayout();
-         this.panelRight.SuspendLayout();
-         this.splitContainer1.Panel1.SuspendLayout();
-         this.splitContainer1.Panel2.SuspendLayout();
-         this.splitContainer1.SuspendLayout();
-         this.tabControl.SuspendLayout();
-         this.tabPageGeneral.SuspendLayout();
-         this.panelItemProperties.SuspendLayout();
-         ((System.ComponentModel.ISupportInitialize)(this.numTimeOffset)).BeginInit();
-         this.tabPageEnclosure.SuspendLayout();
-         this.tabPageAdvanced.SuspendLayout();
-         this.tableLayoutPanelAdvanced.SuspendLayout();
-         this.toolStripItems.SuspendLayout();
-         this.panelLeft.SuspendLayout();
-         this.groupBox3.SuspendLayout();
-         this.groupBox2.SuspendLayout();
-         this.groupBox1.SuspendLayout();
-         this.toolStrip.SuspendLayout();
-         ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-         this.SuspendLayout();
-         // 
-         // toolStripContainer
-         // 
-         // 
-         // toolStripContainer.ContentPanel
-         // 
-         resources.ApplyResources(this.toolStripContainer.ContentPanel, "toolStripContainer.ContentPanel");
-         this.toolStripContainer.ContentPanel.Controls.Add(this.panelContent);
-         this.toolStripContainer.ContentPanel.Controls.Add(this.statusBar);
-         resources.ApplyResources(this.toolStripContainer, "toolStripContainer");
-         this.toolStripContainer.LeftToolStripPanelVisible = false;
-         this.toolStripContainer.Name = "toolStripContainer";
-         this.toolStripContainer.RightToolStripPanelVisible = false;
-         // 
-         // toolStripContainer.TopToolStripPanel
-         // 
-         this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStrip);
-         // 
-         // panelContent
-         // 
-         this.panelContent.Controls.Add(this.panelRight);
-         this.panelContent.Controls.Add(this.splitterV);
-         this.panelContent.Controls.Add(this.panelLeft);
-         resources.ApplyResources(this.panelContent, "panelContent");
-         this.panelContent.Name = "panelContent";
-         // 
-         // panelRight
-         // 
-         this.panelRight.Controls.Add(this.splitContainer1);
-         this.panelRight.Controls.Add(this.toolStripItems);
-         resources.ApplyResources(this.panelRight, "panelRight");
-         this.panelRight.Name = "panelRight";
-         // 
-         // splitContainer1
-         // 
-         resources.ApplyResources(this.splitContainer1, "splitContainer1");
-         this.splitContainer1.Name = "splitContainer1";
-         // 
-         // splitContainer1.Panel1
-         // 
-         this.splitContainer1.Panel1.Controls.Add(this.listViewItems);
-         // 
-         // splitContainer1.Panel2
-         // 
-         this.splitContainer1.Panel2.Controls.Add(this.tabControl);
-         resources.ApplyResources(this.splitContainer1.Panel2, "splitContainer1.Panel2");
-         // 
-         // listViewItems
-         // 
-         this.listViewItems.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRSSBuilder));
+            this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
+            this.panelContent = new System.Windows.Forms.Panel();
+            this.panelRight = new System.Windows.Forms.Panel();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.listViewItems = new System.Windows.Forms.ListView();
+            this.columnTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tabControl = new System.Windows.Forms.TabControl();
+            this.tabPageGeneral = new System.Windows.Forms.TabPage();
+            this.panelItemProperties = new System.Windows.Forms.Panel();
+            this.buttonUseLinkAsGuid = new System.Windows.Forms.Button();
+            this.textCategory = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.buttonHTML = new System.Windows.Forms.Button();
+            this.textComments = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.buttonLocalOffset = new System.Windows.Forms.Button();
+            this.numTimeOffset = new System.Windows.Forms.NumericUpDown();
+            this.label13 = new System.Windows.Forms.Label();
+            this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.textAuthor = new System.Windows.Forms.TextBox();
+            this.textLink = new System.Windows.Forms.TextBox();
+            this.textTitle = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textDesc = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tabPageEnclosure = new System.Windows.Forms.TabPage();
+            this.btnUploadEnclosure = new System.Windows.Forms.Button();
+            this.labelWait = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.linkDetermineFromURL = new System.Windows.Forms.LinkLabel();
+            this.label24 = new System.Windows.Forms.Label();
+            this.comboEnclosureType = new System.Windows.Forms.ComboBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.textEnclosureLength = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.textEnclosureUrl = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.tabPageAdvanced = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanelAdvanced = new System.Windows.Forms.TableLayoutPanel();
+            this.labelGUID = new System.Windows.Forms.Label();
+            this.textGUID = new System.Windows.Forms.TextBox();
+            this.checkPermaLink = new System.Windows.Forms.CheckBox();
+            this.toolStripItems = new System.Windows.Forms.ToolStrip();
+            this.btnAddItem = new System.Windows.Forms.ToolStripButton();
+            this.btnDeleteItem = new System.Windows.Forms.ToolStripButton();
+            this.btnMoveUpItem = new System.Windows.Forms.ToolStripButton();
+            this.btnMoveDownItem = new System.Windows.Forms.ToolStripButton();
+            this.splitterV = new System.Windows.Forms.Splitter();
+            this.panelLeft = new System.Windows.Forms.Panel();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.comboStyleType = new System.Windows.Forms.ComboBox();
+            this.textBoxStyleSheet = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.textBoxImgHeight = new System.Windows.Forms.TextBox();
+            this.textBoxImgWidth = new System.Windows.Forms.TextBox();
+            this.textBoxImgURL = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblHub = new System.Windows.Forms.Label();
+            this.comboBoxLanguage = new System.Windows.Forms.ComboBox();
+            this.cmbHubs = new System.Windows.Forms.ComboBox();
+            this.textBoxDescription = new System.Windows.Forms.TextBox();
+            this.textBoxWebmaster = new System.Windows.Forms.TextBox();
+            this.textBoxEditor = new System.Windows.Forms.TextBox();
+            this.textBoxCopyright = new System.Windows.Forms.TextBox();
+            this.textBoxWebURL = new System.Windows.Forms.TextBox();
+            this.textBoxTitle = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.statusBar = new System.Windows.Forms.StatusBar();
+            this.toolStrip = new System.Windows.Forms.ToolStrip();
+            this.btnNew = new System.Windows.Forms.ToolStripButton();
+            this.btnSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnOpen = new System.Windows.Forms.ToolStripButton();
+            this.btnPreview = new System.Windows.Forms.ToolStripButton();
+            this.btnDownload = new System.Windows.Forms.ToolStripButton();
+            this.btnPublish = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSiteManager = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnDonate = new System.Windows.Forms.ToolStripButton();
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
+            this.mainMenu = new System.Windows.Forms.MainMenu(this.components);
+            this.menuItemFile = new System.Windows.Forms.MenuItem();
+            this.menuItemNew = new System.Windows.Forms.MenuItem();
+            this.menuItemOpen = new System.Windows.Forms.MenuItem();
+            this.menuItemSave = new System.Windows.Forms.MenuItem();
+            this.menuItemSaveAs = new System.Windows.Forms.MenuItem();
+            this.menuItem1 = new System.Windows.Forms.MenuItem();
+            this.menuItemDownloadFeed = new System.Windows.Forms.MenuItem();
+            this.menuItemPublishFeed = new System.Windows.Forms.MenuItem();
+            this.menuItem9 = new System.Windows.Forms.MenuItem();
+            this.menuItemSaveAsHTML = new System.Windows.Forms.MenuItem();
+            this.menuItem12 = new System.Windows.Forms.MenuItem();
+            this.menuItemExit = new System.Windows.Forms.MenuItem();
+            this.menuItem2 = new System.Windows.Forms.MenuItem();
+            this.menuItemAddTopic = new System.Windows.Forms.MenuItem();
+            this.menuItemDeleteTopic = new System.Windows.Forms.MenuItem();
+            this.menuItemTopicUp = new System.Windows.Forms.MenuItem();
+            this.menuItemTopicDown = new System.Windows.Forms.MenuItem();
+            this.menuItem5 = new System.Windows.Forms.MenuItem();
+            this.menuItemViewToolBar = new System.Windows.Forms.MenuItem();
+            this.menuItemViewFeedProp = new System.Windows.Forms.MenuItem();
+            this.menuItem8 = new System.Windows.Forms.MenuItem();
+            this.menuItemViewXml = new System.Windows.Forms.MenuItem();
+            this.menuItemSettings = new System.Windows.Forms.MenuItem();
+            this.menuItemSiteManager = new System.Windows.Forms.MenuItem();
+            this.menuItem7 = new System.Windows.Forms.MenuItem();
+            this.menuItemEnglish = new System.Windows.Forms.MenuItem();
+            this.menuItemGerman = new System.Windows.Forms.MenuItem();
+            this.menuItemDutch = new System.Windows.Forms.MenuItem();
+            this.menuItemCzech = new System.Windows.Forms.MenuItem();
+            this.menuItem6 = new System.Windows.Forms.MenuItem();
+            this.menuItemAbout = new System.Windows.Forms.MenuItem();
+            this.menuItemRSSBuilderWeb = new System.Windows.Forms.MenuItem();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.openEnclosureDialog = new System.Windows.Forms.OpenFileDialog();
+            this.textBoxFeedURL = new System.Windows.Forms.TextBox();
+            this.lblFeedURL = new System.Windows.Forms.Label();
+            this.toolStripContainer.ContentPanel.SuspendLayout();
+            this.toolStripContainer.TopToolStripPanel.SuspendLayout();
+            this.toolStripContainer.SuspendLayout();
+            this.panelContent.SuspendLayout();
+            this.panelRight.SuspendLayout();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            this.tabControl.SuspendLayout();
+            this.tabPageGeneral.SuspendLayout();
+            this.panelItemProperties.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTimeOffset)).BeginInit();
+            this.tabPageEnclosure.SuspendLayout();
+            this.tabPageAdvanced.SuspendLayout();
+            this.tableLayoutPanelAdvanced.SuspendLayout();
+            this.toolStripItems.SuspendLayout();
+            this.panelLeft.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.toolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // toolStripContainer
+            // 
+            // 
+            // toolStripContainer.ContentPanel
+            // 
+            resources.ApplyResources(this.toolStripContainer.ContentPanel, "toolStripContainer.ContentPanel");
+            this.toolStripContainer.ContentPanel.Controls.Add(this.panelContent);
+            this.toolStripContainer.ContentPanel.Controls.Add(this.statusBar);
+            resources.ApplyResources(this.toolStripContainer, "toolStripContainer");
+            this.toolStripContainer.LeftToolStripPanelVisible = false;
+            this.toolStripContainer.Name = "toolStripContainer";
+            this.toolStripContainer.RightToolStripPanelVisible = false;
+            // 
+            // toolStripContainer.TopToolStripPanel
+            // 
+            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStrip);
+            // 
+            // panelContent
+            // 
+            this.panelContent.Controls.Add(this.panelRight);
+            this.panelContent.Controls.Add(this.splitterV);
+            this.panelContent.Controls.Add(this.panelLeft);
+            resources.ApplyResources(this.panelContent, "panelContent");
+            this.panelContent.Name = "panelContent";
+            // 
+            // panelRight
+            // 
+            this.panelRight.Controls.Add(this.splitContainer1);
+            this.panelRight.Controls.Add(this.toolStripItems);
+            resources.ApplyResources(this.panelRight, "panelRight");
+            this.panelRight.Name = "panelRight";
+            // 
+            // splitContainer1
+            // 
+            resources.ApplyResources(this.splitContainer1, "splitContainer1");
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.listViewItems);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.tabControl);
+            resources.ApplyResources(this.splitContainer1.Panel2, "splitContainer1.Panel2");
+            // 
+            // listViewItems
+            // 
+            this.listViewItems.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnTitle,
             this.columnDate});
-         resources.ApplyResources(this.listViewItems, "listViewItems");
-         this.listViewItems.FullRowSelect = true;
-         this.listViewItems.HideSelection = false;
-         this.listViewItems.MultiSelect = false;
-         this.listViewItems.Name = "listViewItems";
-         this.listViewItems.UseCompatibleStateImageBehavior = false;
-         this.listViewItems.View = System.Windows.Forms.View.Details;
-         this.listViewItems.SelectedIndexChanged += new System.EventHandler(this.listViewItems_SelectedIndexChanged);
-         // 
-         // columnTitle
-         // 
-         resources.ApplyResources(this.columnTitle, "columnTitle");
-         // 
-         // columnDate
-         // 
-         resources.ApplyResources(this.columnDate, "columnDate");
-         // 
-         // tabControl
-         // 
-         this.tabControl.Controls.Add(this.tabPageGeneral);
-         this.tabControl.Controls.Add(this.tabPageEnclosure);
-         this.tabControl.Controls.Add(this.tabPageAdvanced);
-         resources.ApplyResources(this.tabControl, "tabControl");
-         this.tabControl.Name = "tabControl";
-         this.tabControl.SelectedIndex = 0;
-         // 
-         // tabPageGeneral
-         // 
-         this.tabPageGeneral.Controls.Add(this.panelItemProperties);
-         resources.ApplyResources(this.tabPageGeneral, "tabPageGeneral");
-         this.tabPageGeneral.Name = "tabPageGeneral";
-         this.tabPageGeneral.UseVisualStyleBackColor = true;
-         // 
-         // panelItemProperties
-         // 
-         this.panelItemProperties.Controls.Add(this.buttonUseLinkAsGuid);
-         this.panelItemProperties.Controls.Add(this.textCategory);
-         this.panelItemProperties.Controls.Add(this.label18);
-         this.panelItemProperties.Controls.Add(this.buttonHTML);
-         this.panelItemProperties.Controls.Add(this.textComments);
-         this.panelItemProperties.Controls.Add(this.label15);
-         this.panelItemProperties.Controls.Add(this.buttonLocalOffset);
-         this.panelItemProperties.Controls.Add(this.numTimeOffset);
-         this.panelItemProperties.Controls.Add(this.label13);
-         this.panelItemProperties.Controls.Add(this.dateTimePicker);
-         this.panelItemProperties.Controls.Add(this.textAuthor);
-         this.panelItemProperties.Controls.Add(this.textLink);
-         this.panelItemProperties.Controls.Add(this.textTitle);
-         this.panelItemProperties.Controls.Add(this.label5);
-         this.panelItemProperties.Controls.Add(this.textDesc);
-         this.panelItemProperties.Controls.Add(this.label4);
-         this.panelItemProperties.Controls.Add(this.label3);
-         this.panelItemProperties.Controls.Add(this.label2);
-         this.panelItemProperties.Controls.Add(this.label1);
-         resources.ApplyResources(this.panelItemProperties, "panelItemProperties");
-         this.panelItemProperties.Name = "panelItemProperties";
-         // 
-         // buttonUseLinkAsGuid
-         // 
-         resources.ApplyResources(this.buttonUseLinkAsGuid, "buttonUseLinkAsGuid");
-         this.buttonUseLinkAsGuid.Name = "buttonUseLinkAsGuid";
-         this.toolTip.SetToolTip(this.buttonUseLinkAsGuid, resources.GetString("buttonUseLinkAsGuid.ToolTip"));
-         this.buttonUseLinkAsGuid.UseVisualStyleBackColor = true;
-         this.buttonUseLinkAsGuid.Click += new System.EventHandler(this.buttonUseLinkAsGuid_Click);
-         // 
-         // textCategory
-         // 
-         resources.ApplyResources(this.textCategory, "textCategory");
-         this.textCategory.Name = "textCategory";
-         this.toolTip.SetToolTip(this.textCategory, resources.GetString("textCategory.ToolTip"));
-         this.textCategory.TextChanged += new System.EventHandler(this.textCategory_TextChanged);
-         // 
-         // label18
-         // 
-         resources.ApplyResources(this.label18, "label18");
-         this.label18.Name = "label18";
-         // 
-         // buttonHTML
-         // 
-         resources.ApplyResources(this.buttonHTML, "buttonHTML");
-         this.buttonHTML.Name = "buttonHTML";
-         this.buttonHTML.Click += new System.EventHandler(this.buttonHTML_Click);
-         // 
-         // textComments
-         // 
-         resources.ApplyResources(this.textComments, "textComments");
-         this.textComments.Name = "textComments";
-         this.toolTip.SetToolTip(this.textComments, resources.GetString("textComments.ToolTip"));
-         this.textComments.TextChanged += new System.EventHandler(this.textComments_TextChanged);
-         this.textComments.Validating += new System.ComponentModel.CancelEventHandler(this.textComments_Validating);
-         // 
-         // label15
-         // 
-         resources.ApplyResources(this.label15, "label15");
-         this.label15.Name = "label15";
-         // 
-         // buttonLocalOffset
-         // 
-         resources.ApplyResources(this.buttonLocalOffset, "buttonLocalOffset");
-         this.buttonLocalOffset.Name = "buttonLocalOffset";
-         this.toolTip.SetToolTip(this.buttonLocalOffset, resources.GetString("buttonLocalOffset.ToolTip"));
-         this.buttonLocalOffset.Click += new System.EventHandler(this.buttonLocalOffset_Click);
-         // 
-         // numTimeOffset
-         // 
-         resources.ApplyResources(this.numTimeOffset, "numTimeOffset");
-         this.numTimeOffset.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.listViewItems, "listViewItems");
+            this.listViewItems.FullRowSelect = true;
+            this.listViewItems.HideSelection = false;
+            this.listViewItems.MultiSelect = false;
+            this.listViewItems.Name = "listViewItems";
+            this.listViewItems.UseCompatibleStateImageBehavior = false;
+            this.listViewItems.View = System.Windows.Forms.View.Details;
+            this.listViewItems.SelectedIndexChanged += new System.EventHandler(this.listViewItems_SelectedIndexChanged);
+            // 
+            // columnTitle
+            // 
+            resources.ApplyResources(this.columnTitle, "columnTitle");
+            // 
+            // columnDate
+            // 
+            resources.ApplyResources(this.columnDate, "columnDate");
+            // 
+            // tabControl
+            // 
+            this.tabControl.Controls.Add(this.tabPageGeneral);
+            this.tabControl.Controls.Add(this.tabPageEnclosure);
+            this.tabControl.Controls.Add(this.tabPageAdvanced);
+            resources.ApplyResources(this.tabControl, "tabControl");
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            // 
+            // tabPageGeneral
+            // 
+            this.tabPageGeneral.Controls.Add(this.panelItemProperties);
+            resources.ApplyResources(this.tabPageGeneral, "tabPageGeneral");
+            this.tabPageGeneral.Name = "tabPageGeneral";
+            this.tabPageGeneral.UseVisualStyleBackColor = true;
+            // 
+            // panelItemProperties
+            // 
+            this.panelItemProperties.Controls.Add(this.buttonUseLinkAsGuid);
+            this.panelItemProperties.Controls.Add(this.textCategory);
+            this.panelItemProperties.Controls.Add(this.label18);
+            this.panelItemProperties.Controls.Add(this.buttonHTML);
+            this.panelItemProperties.Controls.Add(this.textComments);
+            this.panelItemProperties.Controls.Add(this.label15);
+            this.panelItemProperties.Controls.Add(this.buttonLocalOffset);
+            this.panelItemProperties.Controls.Add(this.numTimeOffset);
+            this.panelItemProperties.Controls.Add(this.label13);
+            this.panelItemProperties.Controls.Add(this.dateTimePicker);
+            this.panelItemProperties.Controls.Add(this.textAuthor);
+            this.panelItemProperties.Controls.Add(this.textLink);
+            this.panelItemProperties.Controls.Add(this.textTitle);
+            this.panelItemProperties.Controls.Add(this.label5);
+            this.panelItemProperties.Controls.Add(this.textDesc);
+            this.panelItemProperties.Controls.Add(this.label4);
+            this.panelItemProperties.Controls.Add(this.label3);
+            this.panelItemProperties.Controls.Add(this.label2);
+            this.panelItemProperties.Controls.Add(this.label1);
+            resources.ApplyResources(this.panelItemProperties, "panelItemProperties");
+            this.panelItemProperties.Name = "panelItemProperties";
+            // 
+            // buttonUseLinkAsGuid
+            // 
+            resources.ApplyResources(this.buttonUseLinkAsGuid, "buttonUseLinkAsGuid");
+            this.buttonUseLinkAsGuid.Name = "buttonUseLinkAsGuid";
+            this.toolTip.SetToolTip(this.buttonUseLinkAsGuid, resources.GetString("buttonUseLinkAsGuid.ToolTip"));
+            this.buttonUseLinkAsGuid.UseVisualStyleBackColor = true;
+            this.buttonUseLinkAsGuid.Click += new System.EventHandler(this.buttonUseLinkAsGuid_Click);
+            // 
+            // textCategory
+            // 
+            resources.ApplyResources(this.textCategory, "textCategory");
+            this.textCategory.Name = "textCategory";
+            this.toolTip.SetToolTip(this.textCategory, resources.GetString("textCategory.ToolTip"));
+            this.textCategory.TextChanged += new System.EventHandler(this.textCategory_TextChanged);
+            // 
+            // label18
+            // 
+            resources.ApplyResources(this.label18, "label18");
+            this.label18.Name = "label18";
+            // 
+            // buttonHTML
+            // 
+            resources.ApplyResources(this.buttonHTML, "buttonHTML");
+            this.buttonHTML.Name = "buttonHTML";
+            this.buttonHTML.Click += new System.EventHandler(this.buttonHTML_Click);
+            // 
+            // textComments
+            // 
+            resources.ApplyResources(this.textComments, "textComments");
+            this.textComments.Name = "textComments";
+            this.toolTip.SetToolTip(this.textComments, resources.GetString("textComments.ToolTip"));
+            this.textComments.TextChanged += new System.EventHandler(this.textComments_TextChanged);
+            this.textComments.Validating += new System.ComponentModel.CancelEventHandler(this.textComments_Validating);
+            // 
+            // label15
+            // 
+            resources.ApplyResources(this.label15, "label15");
+            this.label15.Name = "label15";
+            // 
+            // buttonLocalOffset
+            // 
+            resources.ApplyResources(this.buttonLocalOffset, "buttonLocalOffset");
+            this.buttonLocalOffset.Name = "buttonLocalOffset";
+            this.toolTip.SetToolTip(this.buttonLocalOffset, resources.GetString("buttonLocalOffset.ToolTip"));
+            this.buttonLocalOffset.Click += new System.EventHandler(this.buttonLocalOffset_Click);
+            // 
+            // numTimeOffset
+            // 
+            resources.ApplyResources(this.numTimeOffset, "numTimeOffset");
+            this.numTimeOffset.Maximum = new decimal(new int[] {
             48,
             0,
             0,
             0});
-         this.numTimeOffset.Minimum = new decimal(new int[] {
+            this.numTimeOffset.Minimum = new decimal(new int[] {
             48,
             0,
             0,
             -2147483648});
-         this.numTimeOffset.Name = "numTimeOffset";
-         this.toolTip.SetToolTip(this.numTimeOffset, resources.GetString("numTimeOffset.ToolTip"));
-         this.numTimeOffset.ValueChanged += new System.EventHandler(this.numTimeOffset_ValueChanged);
-         // 
-         // label13
-         // 
-         resources.ApplyResources(this.label13, "label13");
-         this.label13.Name = "label13";
-         this.toolTip.SetToolTip(this.label13, resources.GetString("label13.ToolTip"));
-         // 
-         // dateTimePicker
-         // 
-         resources.ApplyResources(this.dateTimePicker, "dateTimePicker");
-         this.dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-         this.dateTimePicker.Name = "dateTimePicker";
-         this.toolTip.SetToolTip(this.dateTimePicker, resources.GetString("dateTimePicker.ToolTip"));
-         this.dateTimePicker.ValueChanged += new System.EventHandler(this.dateTimePicker_ValueChanged);
-         // 
-         // textAuthor
-         // 
-         resources.ApplyResources(this.textAuthor, "textAuthor");
-         this.textAuthor.Name = "textAuthor";
-         this.toolTip.SetToolTip(this.textAuthor, resources.GetString("textAuthor.ToolTip"));
-         this.textAuthor.TextChanged += new System.EventHandler(this.textAuthor_TextChanged);
-         this.textAuthor.Validating += new System.ComponentModel.CancelEventHandler(this.textAuthor_Validating);
-         // 
-         // textLink
-         // 
-         resources.ApplyResources(this.textLink, "textLink");
-         this.textLink.Name = "textLink";
-         this.toolTip.SetToolTip(this.textLink, resources.GetString("textLink.ToolTip"));
-         this.textLink.TextChanged += new System.EventHandler(this.textLink_TextChanged);
-         this.textLink.Validating += new System.ComponentModel.CancelEventHandler(this.textLink_Validating);
-         // 
-         // textTitle
-         // 
-         resources.ApplyResources(this.textTitle, "textTitle");
-         this.textTitle.Name = "textTitle";
-         this.toolTip.SetToolTip(this.textTitle, resources.GetString("textTitle.ToolTip"));
-         this.textTitle.TextChanged += new System.EventHandler(this.textTitle_TextChanged);
-         this.textTitle.Validating += new System.ComponentModel.CancelEventHandler(this.textTitle_Validating);
-         // 
-         // label5
-         // 
-         resources.ApplyResources(this.label5, "label5");
-         this.label5.Name = "label5";
-         // 
-         // textDesc
-         // 
-         resources.ApplyResources(this.textDesc, "textDesc");
-         this.textDesc.Name = "textDesc";
-         this.toolTip.SetToolTip(this.textDesc, resources.GetString("textDesc.ToolTip"));
-         this.textDesc.TextChanged += new System.EventHandler(this.textDesc_TextChanged);
-         this.textDesc.Validating += new System.ComponentModel.CancelEventHandler(this.textDesc_Validating);
-         // 
-         // label4
-         // 
-         resources.ApplyResources(this.label4, "label4");
-         this.label4.Name = "label4";
-         // 
-         // label3
-         // 
-         resources.ApplyResources(this.label3, "label3");
-         this.label3.Name = "label3";
-         // 
-         // label2
-         // 
-         resources.ApplyResources(this.label2, "label2");
-         this.label2.Name = "label2";
-         // 
-         // label1
-         // 
-         resources.ApplyResources(this.label1, "label1");
-         this.label1.Name = "label1";
-         // 
-         // tabPageEnclosure
-         // 
-         this.tabPageEnclosure.Controls.Add(this.btnUploadEnclosure);
-         this.tabPageEnclosure.Controls.Add(this.labelWait);
-         this.tabPageEnclosure.Controls.Add(this.label28);
-         this.tabPageEnclosure.Controls.Add(this.label27);
-         this.tabPageEnclosure.Controls.Add(this.label26);
-         this.tabPageEnclosure.Controls.Add(this.linkDetermineFromURL);
-         this.tabPageEnclosure.Controls.Add(this.label24);
-         this.tabPageEnclosure.Controls.Add(this.comboEnclosureType);
-         this.tabPageEnclosure.Controls.Add(this.label23);
-         this.tabPageEnclosure.Controls.Add(this.textEnclosureLength);
-         this.tabPageEnclosure.Controls.Add(this.label22);
-         this.tabPageEnclosure.Controls.Add(this.textEnclosureUrl);
-         this.tabPageEnclosure.Controls.Add(this.label21);
-         resources.ApplyResources(this.tabPageEnclosure, "tabPageEnclosure");
-         this.tabPageEnclosure.Name = "tabPageEnclosure";
-         // 
-         // btnUploadEnclosure
-         // 
-         resources.ApplyResources(this.btnUploadEnclosure, "btnUploadEnclosure");
-         this.btnUploadEnclosure.Name = "btnUploadEnclosure";
-         this.btnUploadEnclosure.UseVisualStyleBackColor = true;
-         this.btnUploadEnclosure.Click += new System.EventHandler(this.btnUploadEnclosure_Click);
-         // 
-         // labelWait
-         // 
-         resources.ApplyResources(this.labelWait, "labelWait");
-         this.labelWait.ForeColor = System.Drawing.Color.LightCoral;
-         this.labelWait.Name = "labelWait";
-         // 
-         // label28
-         // 
-         resources.ApplyResources(this.label28, "label28");
-         this.label28.ForeColor = System.Drawing.SystemColors.GrayText;
-         this.label28.Name = "label28";
-         // 
-         // label27
-         // 
-         resources.ApplyResources(this.label27, "label27");
-         this.label27.ForeColor = System.Drawing.SystemColors.GrayText;
-         this.label27.Name = "label27";
-         // 
-         // label26
-         // 
-         resources.ApplyResources(this.label26, "label26");
-         this.label26.Name = "label26";
-         // 
-         // linkDetermineFromURL
-         // 
-         resources.ApplyResources(this.linkDetermineFromURL, "linkDetermineFromURL");
-         this.linkDetermineFromURL.Name = "linkDetermineFromURL";
-         this.linkDetermineFromURL.TabStop = true;
-         this.linkDetermineFromURL.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkDetermineFromURL_LinkClicked);
-         // 
-         // label24
-         // 
-         resources.ApplyResources(this.label24, "label24");
-         this.label24.Name = "label24";
-         // 
-         // comboEnclosureType
-         // 
-         resources.ApplyResources(this.comboEnclosureType, "comboEnclosureType");
-         this.comboEnclosureType.Items.AddRange(new object[] {
+            this.numTimeOffset.Name = "numTimeOffset";
+            this.toolTip.SetToolTip(this.numTimeOffset, resources.GetString("numTimeOffset.ToolTip"));
+            this.numTimeOffset.ValueChanged += new System.EventHandler(this.numTimeOffset_ValueChanged);
+            // 
+            // label13
+            // 
+            resources.ApplyResources(this.label13, "label13");
+            this.label13.Name = "label13";
+            this.toolTip.SetToolTip(this.label13, resources.GetString("label13.ToolTip"));
+            // 
+            // dateTimePicker
+            // 
+            resources.ApplyResources(this.dateTimePicker, "dateTimePicker");
+            this.dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker.Name = "dateTimePicker";
+            this.toolTip.SetToolTip(this.dateTimePicker, resources.GetString("dateTimePicker.ToolTip"));
+            this.dateTimePicker.ValueChanged += new System.EventHandler(this.dateTimePicker_ValueChanged);
+            // 
+            // textAuthor
+            // 
+            resources.ApplyResources(this.textAuthor, "textAuthor");
+            this.textAuthor.Name = "textAuthor";
+            this.toolTip.SetToolTip(this.textAuthor, resources.GetString("textAuthor.ToolTip"));
+            this.textAuthor.TextChanged += new System.EventHandler(this.textAuthor_TextChanged);
+            this.textAuthor.Validating += new System.ComponentModel.CancelEventHandler(this.textAuthor_Validating);
+            // 
+            // textLink
+            // 
+            resources.ApplyResources(this.textLink, "textLink");
+            this.textLink.Name = "textLink";
+            this.toolTip.SetToolTip(this.textLink, resources.GetString("textLink.ToolTip"));
+            this.textLink.TextChanged += new System.EventHandler(this.textLink_TextChanged);
+            this.textLink.Validating += new System.ComponentModel.CancelEventHandler(this.textLink_Validating);
+            // 
+            // textTitle
+            // 
+            resources.ApplyResources(this.textTitle, "textTitle");
+            this.textTitle.Name = "textTitle";
+            this.toolTip.SetToolTip(this.textTitle, resources.GetString("textTitle.ToolTip"));
+            this.textTitle.TextChanged += new System.EventHandler(this.textTitle_TextChanged);
+            this.textTitle.Validating += new System.ComponentModel.CancelEventHandler(this.textTitle_Validating);
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            // 
+            // textDesc
+            // 
+            resources.ApplyResources(this.textDesc, "textDesc");
+            this.textDesc.Name = "textDesc";
+            this.toolTip.SetToolTip(this.textDesc, resources.GetString("textDesc.ToolTip"));
+            this.textDesc.TextChanged += new System.EventHandler(this.textDesc_TextChanged);
+            this.textDesc.Validating += new System.ComponentModel.CancelEventHandler(this.textDesc_Validating);
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
+            // tabPageEnclosure
+            // 
+            this.tabPageEnclosure.Controls.Add(this.btnUploadEnclosure);
+            this.tabPageEnclosure.Controls.Add(this.labelWait);
+            this.tabPageEnclosure.Controls.Add(this.label28);
+            this.tabPageEnclosure.Controls.Add(this.label27);
+            this.tabPageEnclosure.Controls.Add(this.label26);
+            this.tabPageEnclosure.Controls.Add(this.linkDetermineFromURL);
+            this.tabPageEnclosure.Controls.Add(this.label24);
+            this.tabPageEnclosure.Controls.Add(this.comboEnclosureType);
+            this.tabPageEnclosure.Controls.Add(this.label23);
+            this.tabPageEnclosure.Controls.Add(this.textEnclosureLength);
+            this.tabPageEnclosure.Controls.Add(this.label22);
+            this.tabPageEnclosure.Controls.Add(this.textEnclosureUrl);
+            this.tabPageEnclosure.Controls.Add(this.label21);
+            resources.ApplyResources(this.tabPageEnclosure, "tabPageEnclosure");
+            this.tabPageEnclosure.Name = "tabPageEnclosure";
+            // 
+            // btnUploadEnclosure
+            // 
+            resources.ApplyResources(this.btnUploadEnclosure, "btnUploadEnclosure");
+            this.btnUploadEnclosure.Name = "btnUploadEnclosure";
+            this.btnUploadEnclosure.UseVisualStyleBackColor = true;
+            this.btnUploadEnclosure.Click += new System.EventHandler(this.btnUploadEnclosure_Click);
+            // 
+            // labelWait
+            // 
+            resources.ApplyResources(this.labelWait, "labelWait");
+            this.labelWait.ForeColor = System.Drawing.Color.LightCoral;
+            this.labelWait.Name = "labelWait";
+            // 
+            // label28
+            // 
+            resources.ApplyResources(this.label28, "label28");
+            this.label28.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.label28.Name = "label28";
+            // 
+            // label27
+            // 
+            resources.ApplyResources(this.label27, "label27");
+            this.label27.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.label27.Name = "label27";
+            // 
+            // label26
+            // 
+            resources.ApplyResources(this.label26, "label26");
+            this.label26.Name = "label26";
+            // 
+            // linkDetermineFromURL
+            // 
+            resources.ApplyResources(this.linkDetermineFromURL, "linkDetermineFromURL");
+            this.linkDetermineFromURL.Name = "linkDetermineFromURL";
+            this.linkDetermineFromURL.TabStop = true;
+            this.linkDetermineFromURL.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkDetermineFromURL_LinkClicked);
+            // 
+            // label24
+            // 
+            resources.ApplyResources(this.label24, "label24");
+            this.label24.Name = "label24";
+            // 
+            // comboEnclosureType
+            // 
+            resources.ApplyResources(this.comboEnclosureType, "comboEnclosureType");
+            this.comboEnclosureType.Items.AddRange(new object[] {
             resources.GetString("comboEnclosureType.Items"),
             resources.GetString("comboEnclosureType.Items1"),
             resources.GetString("comboEnclosureType.Items2"),
@@ -1133,238 +1144,247 @@ namespace RSSBuilder
             resources.GetString("comboEnclosureType.Items9"),
             resources.GetString("comboEnclosureType.Items10"),
             resources.GetString("comboEnclosureType.Items11")});
-         this.comboEnclosureType.Name = "comboEnclosureType";
-         this.toolTip.SetToolTip(this.comboEnclosureType, resources.GetString("comboEnclosureType.ToolTip"));
-         this.comboEnclosureType.TextChanged += new System.EventHandler(this.comboEnclosureType_TextChanged);
-         // 
-         // label23
-         // 
-         resources.ApplyResources(this.label23, "label23");
-         this.label23.Name = "label23";
-         // 
-         // textEnclosureLength
-         // 
-         resources.ApplyResources(this.textEnclosureLength, "textEnclosureLength");
-         this.textEnclosureLength.Name = "textEnclosureLength";
-         this.toolTip.SetToolTip(this.textEnclosureLength, resources.GetString("textEnclosureLength.ToolTip"));
-         this.textEnclosureLength.TextChanged += new System.EventHandler(this.textEnclosureLength_TextChanged);
-         // 
-         // label22
-         // 
-         resources.ApplyResources(this.label22, "label22");
-         this.label22.Name = "label22";
-         // 
-         // textEnclosureUrl
-         // 
-         resources.ApplyResources(this.textEnclosureUrl, "textEnclosureUrl");
-         this.textEnclosureUrl.Name = "textEnclosureUrl";
-         this.toolTip.SetToolTip(this.textEnclosureUrl, resources.GetString("textEnclosureUrl.ToolTip"));
-         this.textEnclosureUrl.TextChanged += new System.EventHandler(this.textEnclosureUrl_TextChanged);
-         // 
-         // label21
-         // 
-         resources.ApplyResources(this.label21, "label21");
-         this.label21.Name = "label21";
-         // 
-         // tabPageAdvanced
-         // 
-         this.tabPageAdvanced.Controls.Add(this.tableLayoutPanelAdvanced);
-         resources.ApplyResources(this.tabPageAdvanced, "tabPageAdvanced");
-         this.tabPageAdvanced.Name = "tabPageAdvanced";
-         // 
-         // tableLayoutPanelAdvanced
-         // 
-         resources.ApplyResources(this.tableLayoutPanelAdvanced, "tableLayoutPanelAdvanced");
-         this.tableLayoutPanelAdvanced.Controls.Add(this.labelGUID, 0, 0);
-         this.tableLayoutPanelAdvanced.Controls.Add(this.textGUID, 1, 0);
-         this.tableLayoutPanelAdvanced.Controls.Add(this.checkPermaLink, 1, 1);
-         this.tableLayoutPanelAdvanced.Name = "tableLayoutPanelAdvanced";
-         // 
-         // labelGUID
-         // 
-         resources.ApplyResources(this.labelGUID, "labelGUID");
-         this.labelGUID.Name = "labelGUID";
-         // 
-         // textGUID
-         // 
-         resources.ApplyResources(this.textGUID, "textGUID");
-         this.textGUID.Name = "textGUID";
-         this.toolTip.SetToolTip(this.textGUID, resources.GetString("textGUID.ToolTip"));
-         this.textGUID.TextChanged += new System.EventHandler(this.textGUID_TextChanged);
-         // 
-         // checkPermaLink
-         // 
-         resources.ApplyResources(this.checkPermaLink, "checkPermaLink");
-         this.checkPermaLink.Checked = true;
-         this.checkPermaLink.CheckState = System.Windows.Forms.CheckState.Checked;
-         this.checkPermaLink.Name = "checkPermaLink";
-         this.checkPermaLink.UseVisualStyleBackColor = true;
-         this.checkPermaLink.CheckedChanged += new System.EventHandler(this.checkPermaLink_CheckedChanged);
-         // 
-         // toolStripItems
-         // 
-         resources.ApplyResources(this.toolStripItems, "toolStripItems");
-         this.toolStripItems.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-         this.toolStripItems.ImageScalingSize = new System.Drawing.Size(32, 32);
-         this.toolStripItems.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.comboEnclosureType.Name = "comboEnclosureType";
+            this.toolTip.SetToolTip(this.comboEnclosureType, resources.GetString("comboEnclosureType.ToolTip"));
+            this.comboEnclosureType.TextChanged += new System.EventHandler(this.comboEnclosureType_TextChanged);
+            // 
+            // label23
+            // 
+            resources.ApplyResources(this.label23, "label23");
+            this.label23.Name = "label23";
+            // 
+            // textEnclosureLength
+            // 
+            resources.ApplyResources(this.textEnclosureLength, "textEnclosureLength");
+            this.textEnclosureLength.Name = "textEnclosureLength";
+            this.toolTip.SetToolTip(this.textEnclosureLength, resources.GetString("textEnclosureLength.ToolTip"));
+            this.textEnclosureLength.TextChanged += new System.EventHandler(this.textEnclosureLength_TextChanged);
+            // 
+            // label22
+            // 
+            resources.ApplyResources(this.label22, "label22");
+            this.label22.Name = "label22";
+            // 
+            // textEnclosureUrl
+            // 
+            resources.ApplyResources(this.textEnclosureUrl, "textEnclosureUrl");
+            this.textEnclosureUrl.Name = "textEnclosureUrl";
+            this.toolTip.SetToolTip(this.textEnclosureUrl, resources.GetString("textEnclosureUrl.ToolTip"));
+            this.textEnclosureUrl.TextChanged += new System.EventHandler(this.textEnclosureUrl_TextChanged);
+            // 
+            // label21
+            // 
+            resources.ApplyResources(this.label21, "label21");
+            this.label21.Name = "label21";
+            // 
+            // tabPageAdvanced
+            // 
+            this.tabPageAdvanced.Controls.Add(this.tableLayoutPanelAdvanced);
+            resources.ApplyResources(this.tabPageAdvanced, "tabPageAdvanced");
+            this.tabPageAdvanced.Name = "tabPageAdvanced";
+            // 
+            // tableLayoutPanelAdvanced
+            // 
+            resources.ApplyResources(this.tableLayoutPanelAdvanced, "tableLayoutPanelAdvanced");
+            this.tableLayoutPanelAdvanced.Controls.Add(this.labelGUID, 0, 0);
+            this.tableLayoutPanelAdvanced.Controls.Add(this.textGUID, 1, 0);
+            this.tableLayoutPanelAdvanced.Controls.Add(this.checkPermaLink, 1, 1);
+            this.tableLayoutPanelAdvanced.Name = "tableLayoutPanelAdvanced";
+            // 
+            // labelGUID
+            // 
+            resources.ApplyResources(this.labelGUID, "labelGUID");
+            this.labelGUID.Name = "labelGUID";
+            // 
+            // textGUID
+            // 
+            resources.ApplyResources(this.textGUID, "textGUID");
+            this.textGUID.Name = "textGUID";
+            this.toolTip.SetToolTip(this.textGUID, resources.GetString("textGUID.ToolTip"));
+            this.textGUID.TextChanged += new System.EventHandler(this.textGUID_TextChanged);
+            // 
+            // checkPermaLink
+            // 
+            resources.ApplyResources(this.checkPermaLink, "checkPermaLink");
+            this.checkPermaLink.Checked = true;
+            this.checkPermaLink.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkPermaLink.Name = "checkPermaLink";
+            this.checkPermaLink.UseVisualStyleBackColor = true;
+            this.checkPermaLink.CheckedChanged += new System.EventHandler(this.checkPermaLink_CheckedChanged);
+            // 
+            // toolStripItems
+            // 
+            resources.ApplyResources(this.toolStripItems, "toolStripItems");
+            this.toolStripItems.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripItems.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.toolStripItems.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnAddItem,
             this.btnDeleteItem,
             this.btnMoveUpItem,
             this.btnMoveDownItem});
-         this.toolStripItems.Name = "toolStripItems";
-         // 
-         // btnAddItem
-         // 
-         this.btnAddItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-         resources.ApplyResources(this.btnAddItem, "btnAddItem");
-         this.btnAddItem.Name = "btnAddItem";
-         this.btnAddItem.Click += new System.EventHandler(this.menuItemAddTopic_Click);
-         // 
-         // btnDeleteItem
-         // 
-         this.btnDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-         resources.ApplyResources(this.btnDeleteItem, "btnDeleteItem");
-         this.btnDeleteItem.Name = "btnDeleteItem";
-         this.btnDeleteItem.Click += new System.EventHandler(this.menuItemDeleteTopic_Click);
-         // 
-         // btnMoveUpItem
-         // 
-         this.btnMoveUpItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-         resources.ApplyResources(this.btnMoveUpItem, "btnMoveUpItem");
-         this.btnMoveUpItem.Name = "btnMoveUpItem";
-         this.btnMoveUpItem.Click += new System.EventHandler(this.menuItemTopicUp_Click);
-         // 
-         // btnMoveDownItem
-         // 
-         this.btnMoveDownItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-         resources.ApplyResources(this.btnMoveDownItem, "btnMoveDownItem");
-         this.btnMoveDownItem.Name = "btnMoveDownItem";
-         this.btnMoveDownItem.Click += new System.EventHandler(this.menuItemTopicDown_Click);
-         // 
-         // splitterV
-         // 
-         resources.ApplyResources(this.splitterV, "splitterV");
-         this.splitterV.Name = "splitterV";
-         this.splitterV.TabStop = false;
-         // 
-         // panelLeft
-         // 
-         resources.ApplyResources(this.panelLeft, "panelLeft");
-         this.panelLeft.Controls.Add(this.groupBox3);
-         this.panelLeft.Controls.Add(this.groupBox2);
-         this.panelLeft.Controls.Add(this.groupBox1);
-         this.panelLeft.Name = "panelLeft";
-         // 
-         // groupBox3
-         // 
-         resources.ApplyResources(this.groupBox3, "groupBox3");
-         this.groupBox3.Controls.Add(this.label20);
-         this.groupBox3.Controls.Add(this.comboStyleType);
-         this.groupBox3.Controls.Add(this.textBoxStyleSheet);
-         this.groupBox3.Controls.Add(this.label19);
-         this.groupBox3.Name = "groupBox3";
-         this.groupBox3.TabStop = false;
-         // 
-         // label20
-         // 
-         resources.ApplyResources(this.label20, "label20");
-         this.label20.Name = "label20";
-         // 
-         // comboStyleType
-         // 
-         resources.ApplyResources(this.comboStyleType, "comboStyleType");
-         this.comboStyleType.Items.AddRange(new object[] {
+            this.toolStripItems.Name = "toolStripItems";
+            // 
+            // btnAddItem
+            // 
+            this.btnAddItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.btnAddItem, "btnAddItem");
+            this.btnAddItem.Name = "btnAddItem";
+            this.btnAddItem.Click += new System.EventHandler(this.menuItemAddTopic_Click);
+            // 
+            // btnDeleteItem
+            // 
+            this.btnDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.btnDeleteItem, "btnDeleteItem");
+            this.btnDeleteItem.Name = "btnDeleteItem";
+            this.btnDeleteItem.Click += new System.EventHandler(this.menuItemDeleteTopic_Click);
+            // 
+            // btnMoveUpItem
+            // 
+            this.btnMoveUpItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.btnMoveUpItem, "btnMoveUpItem");
+            this.btnMoveUpItem.Name = "btnMoveUpItem";
+            this.btnMoveUpItem.Click += new System.EventHandler(this.menuItemTopicUp_Click);
+            // 
+            // btnMoveDownItem
+            // 
+            this.btnMoveDownItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.btnMoveDownItem, "btnMoveDownItem");
+            this.btnMoveDownItem.Name = "btnMoveDownItem";
+            this.btnMoveDownItem.Click += new System.EventHandler(this.menuItemTopicDown_Click);
+            // 
+            // splitterV
+            // 
+            resources.ApplyResources(this.splitterV, "splitterV");
+            this.splitterV.Name = "splitterV";
+            this.splitterV.TabStop = false;
+            // 
+            // panelLeft
+            // 
+            resources.ApplyResources(this.panelLeft, "panelLeft");
+            this.panelLeft.Controls.Add(this.groupBox3);
+            this.panelLeft.Controls.Add(this.groupBox2);
+            this.panelLeft.Controls.Add(this.groupBox1);
+            this.panelLeft.Name = "panelLeft";
+            // 
+            // groupBox3
+            // 
+            resources.ApplyResources(this.groupBox3, "groupBox3");
+            this.groupBox3.Controls.Add(this.label20);
+            this.groupBox3.Controls.Add(this.comboStyleType);
+            this.groupBox3.Controls.Add(this.textBoxStyleSheet);
+            this.groupBox3.Controls.Add(this.label19);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.TabStop = false;
+            // 
+            // label20
+            // 
+            resources.ApplyResources(this.label20, "label20");
+            this.label20.Name = "label20";
+            // 
+            // comboStyleType
+            // 
+            resources.ApplyResources(this.comboStyleType, "comboStyleType");
+            this.comboStyleType.Items.AddRange(new object[] {
             resources.GetString("comboStyleType.Items"),
             resources.GetString("comboStyleType.Items1")});
-         this.comboStyleType.Name = "comboStyleType";
-         this.comboStyleType.TextChanged += new System.EventHandler(this.comboStyleType_TextChanged);
-         // 
-         // textBoxStyleSheet
-         // 
-         resources.ApplyResources(this.textBoxStyleSheet, "textBoxStyleSheet");
-         this.textBoxStyleSheet.Name = "textBoxStyleSheet";
-         this.toolTip.SetToolTip(this.textBoxStyleSheet, resources.GetString("textBoxStyleSheet.ToolTip"));
-         this.textBoxStyleSheet.TextChanged += new System.EventHandler(this.textBoxStyleSheet_TextChanged);
-         this.textBoxStyleSheet.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxStyleSheet_Validating);
-         // 
-         // label19
-         // 
-         resources.ApplyResources(this.label19, "label19");
-         this.label19.Name = "label19";
-         // 
-         // groupBox2
-         // 
-         resources.ApplyResources(this.groupBox2, "groupBox2");
-         this.groupBox2.Controls.Add(this.textBoxImgHeight);
-         this.groupBox2.Controls.Add(this.textBoxImgWidth);
-         this.groupBox2.Controls.Add(this.textBoxImgURL);
-         this.groupBox2.Controls.Add(this.label14);
-         this.groupBox2.Controls.Add(this.label16);
-         this.groupBox2.Controls.Add(this.label17);
-         this.groupBox2.Name = "groupBox2";
-         this.groupBox2.TabStop = false;
-         // 
-         // textBoxImgHeight
-         // 
-         resources.ApplyResources(this.textBoxImgHeight, "textBoxImgHeight");
-         this.textBoxImgHeight.Name = "textBoxImgHeight";
-         this.toolTip.SetToolTip(this.textBoxImgHeight, resources.GetString("textBoxImgHeight.ToolTip"));
-         this.textBoxImgHeight.TextChanged += new System.EventHandler(this.textBoxImgHeight_TextChanged);
-         // 
-         // textBoxImgWidth
-         // 
-         resources.ApplyResources(this.textBoxImgWidth, "textBoxImgWidth");
-         this.textBoxImgWidth.Name = "textBoxImgWidth";
-         this.toolTip.SetToolTip(this.textBoxImgWidth, resources.GetString("textBoxImgWidth.ToolTip"));
-         this.textBoxImgWidth.TextChanged += new System.EventHandler(this.textBoxImgWidth_TextChanged);
-         // 
-         // textBoxImgURL
-         // 
-         resources.ApplyResources(this.textBoxImgURL, "textBoxImgURL");
-         this.textBoxImgURL.Name = "textBoxImgURL";
-         this.toolTip.SetToolTip(this.textBoxImgURL, resources.GetString("textBoxImgURL.ToolTip"));
-         this.textBoxImgURL.TextChanged += new System.EventHandler(this.textBoxImgURL_TextChanged);
-         this.textBoxImgURL.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxImgURL_Validating);
-         // 
-         // label14
-         // 
-         resources.ApplyResources(this.label14, "label14");
-         this.label14.Name = "label14";
-         // 
-         // label16
-         // 
-         resources.ApplyResources(this.label16, "label16");
-         this.label16.Name = "label16";
-         // 
-         // label17
-         // 
-         resources.ApplyResources(this.label17, "label17");
-         this.label17.Name = "label17";
-         // 
-         // groupBox1
-         // 
-         resources.ApplyResources(this.groupBox1, "groupBox1");
-         this.groupBox1.Controls.Add(this.comboBoxLanguage);
-         this.groupBox1.Controls.Add(this.textBoxDescription);
-         this.groupBox1.Controls.Add(this.textBoxWebmaster);
-         this.groupBox1.Controls.Add(this.textBoxEditor);
-         this.groupBox1.Controls.Add(this.textBoxCopyright);
-         this.groupBox1.Controls.Add(this.textBoxWebURL);
-         this.groupBox1.Controls.Add(this.textBoxTitle);
-         this.groupBox1.Controls.Add(this.label6);
-         this.groupBox1.Controls.Add(this.label8);
-         this.groupBox1.Controls.Add(this.label7);
-         this.groupBox1.Controls.Add(this.label10);
-         this.groupBox1.Controls.Add(this.label11);
-         this.groupBox1.Controls.Add(this.label12);
-         this.groupBox1.Controls.Add(this.label9);
-         this.groupBox1.Name = "groupBox1";
-         this.groupBox1.TabStop = false;
-         // 
-         // comboBoxLanguage
-         // 
-         resources.ApplyResources(this.comboBoxLanguage, "comboBoxLanguage");
-         this.comboBoxLanguage.Items.AddRange(new object[] {
+            this.comboStyleType.Name = "comboStyleType";
+            this.comboStyleType.TextChanged += new System.EventHandler(this.comboStyleType_TextChanged);
+            // 
+            // textBoxStyleSheet
+            // 
+            resources.ApplyResources(this.textBoxStyleSheet, "textBoxStyleSheet");
+            this.textBoxStyleSheet.Name = "textBoxStyleSheet";
+            this.toolTip.SetToolTip(this.textBoxStyleSheet, resources.GetString("textBoxStyleSheet.ToolTip"));
+            this.textBoxStyleSheet.TextChanged += new System.EventHandler(this.textBoxStyleSheet_TextChanged);
+            this.textBoxStyleSheet.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxStyleSheet_Validating);
+            // 
+            // label19
+            // 
+            resources.ApplyResources(this.label19, "label19");
+            this.label19.Name = "label19";
+            // 
+            // groupBox2
+            // 
+            resources.ApplyResources(this.groupBox2, "groupBox2");
+            this.groupBox2.Controls.Add(this.textBoxImgHeight);
+            this.groupBox2.Controls.Add(this.textBoxImgWidth);
+            this.groupBox2.Controls.Add(this.textBoxImgURL);
+            this.groupBox2.Controls.Add(this.label14);
+            this.groupBox2.Controls.Add(this.label16);
+            this.groupBox2.Controls.Add(this.label17);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.TabStop = false;
+            // 
+            // textBoxImgHeight
+            // 
+            resources.ApplyResources(this.textBoxImgHeight, "textBoxImgHeight");
+            this.textBoxImgHeight.Name = "textBoxImgHeight";
+            this.toolTip.SetToolTip(this.textBoxImgHeight, resources.GetString("textBoxImgHeight.ToolTip"));
+            this.textBoxImgHeight.TextChanged += new System.EventHandler(this.textBoxImgHeight_TextChanged);
+            // 
+            // textBoxImgWidth
+            // 
+            resources.ApplyResources(this.textBoxImgWidth, "textBoxImgWidth");
+            this.textBoxImgWidth.Name = "textBoxImgWidth";
+            this.toolTip.SetToolTip(this.textBoxImgWidth, resources.GetString("textBoxImgWidth.ToolTip"));
+            this.textBoxImgWidth.TextChanged += new System.EventHandler(this.textBoxImgWidth_TextChanged);
+            // 
+            // textBoxImgURL
+            // 
+            resources.ApplyResources(this.textBoxImgURL, "textBoxImgURL");
+            this.textBoxImgURL.Name = "textBoxImgURL";
+            this.toolTip.SetToolTip(this.textBoxImgURL, resources.GetString("textBoxImgURL.ToolTip"));
+            this.textBoxImgURL.TextChanged += new System.EventHandler(this.textBoxImgURL_TextChanged);
+            this.textBoxImgURL.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxImgURL_Validating);
+            // 
+            // label14
+            // 
+            resources.ApplyResources(this.label14, "label14");
+            this.label14.Name = "label14";
+            // 
+            // label16
+            // 
+            resources.ApplyResources(this.label16, "label16");
+            this.label16.Name = "label16";
+            // 
+            // label17
+            // 
+            resources.ApplyResources(this.label17, "label17");
+            this.label17.Name = "label17";
+            // 
+            // groupBox1
+            // 
+            resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.textBoxFeedURL);
+            this.groupBox1.Controls.Add(this.lblFeedURL);
+            this.groupBox1.Controls.Add(this.lblHub);
+            this.groupBox1.Controls.Add(this.comboBoxLanguage);
+            this.groupBox1.Controls.Add(this.cmbHubs);
+            this.groupBox1.Controls.Add(this.textBoxDescription);
+            this.groupBox1.Controls.Add(this.textBoxWebmaster);
+            this.groupBox1.Controls.Add(this.textBoxEditor);
+            this.groupBox1.Controls.Add(this.textBoxCopyright);
+            this.groupBox1.Controls.Add(this.textBoxWebURL);
+            this.groupBox1.Controls.Add(this.textBoxTitle);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.TabStop = false;
+            // 
+            // lblHub
+            // 
+            resources.ApplyResources(this.lblHub, "lblHub");
+            this.lblHub.Name = "lblHub";
+            // 
+            // comboBoxLanguage
+            // 
+            resources.ApplyResources(this.comboBoxLanguage, "comboBoxLanguage");
+            this.comboBoxLanguage.Items.AddRange(new object[] {
             resources.GetString("comboBoxLanguage.Items"),
             resources.GetString("comboBoxLanguage.Items1"),
             resources.GetString("comboBoxLanguage.Items2"),
@@ -1460,102 +1480,112 @@ namespace RSSBuilder
             resources.GetString("comboBoxLanguage.Items92"),
             resources.GetString("comboBoxLanguage.Items93"),
             resources.GetString("comboBoxLanguage.Items94")});
-         this.comboBoxLanguage.Name = "comboBoxLanguage";
-         this.toolTip.SetToolTip(this.comboBoxLanguage, resources.GetString("comboBoxLanguage.ToolTip"));
-         this.comboBoxLanguage.SelectedIndexChanged += new System.EventHandler(this.comboBoxLang_SelectedIndexChanged);
-         // 
-         // textBoxDescription
-         // 
-         resources.ApplyResources(this.textBoxDescription, "textBoxDescription");
-         this.textBoxDescription.Name = "textBoxDescription";
-         this.toolTip.SetToolTip(this.textBoxDescription, resources.GetString("textBoxDescription.ToolTip"));
-         this.textBoxDescription.TextChanged += new System.EventHandler(this.textBoxDescription_TextChanged);
-         this.textBoxDescription.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxDescription_Validating);
-         // 
-         // textBoxWebmaster
-         // 
-         resources.ApplyResources(this.textBoxWebmaster, "textBoxWebmaster");
-         this.textBoxWebmaster.Name = "textBoxWebmaster";
-         this.toolTip.SetToolTip(this.textBoxWebmaster, resources.GetString("textBoxWebmaster.ToolTip"));
-         this.textBoxWebmaster.TextChanged += new System.EventHandler(this.textBoxWebmaster_TextChanged);
-         this.textBoxWebmaster.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxWebmaster_Validating);
-         // 
-         // textBoxEditor
-         // 
-         resources.ApplyResources(this.textBoxEditor, "textBoxEditor");
-         this.textBoxEditor.Name = "textBoxEditor";
-         this.toolTip.SetToolTip(this.textBoxEditor, resources.GetString("textBoxEditor.ToolTip"));
-         this.textBoxEditor.TextChanged += new System.EventHandler(this.textBoxEditor_TextChanged);
-         this.textBoxEditor.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxEditor_Validating);
-         // 
-         // textBoxCopyright
-         // 
-         resources.ApplyResources(this.textBoxCopyright, "textBoxCopyright");
-         this.textBoxCopyright.Name = "textBoxCopyright";
-         this.toolTip.SetToolTip(this.textBoxCopyright, resources.GetString("textBoxCopyright.ToolTip"));
-         this.textBoxCopyright.TextChanged += new System.EventHandler(this.textBoxCopyright_TextChanged);
-         // 
-         // textBoxWebURL
-         // 
-         resources.ApplyResources(this.textBoxWebURL, "textBoxWebURL");
-         this.textBoxWebURL.Name = "textBoxWebURL";
-         this.toolTip.SetToolTip(this.textBoxWebURL, resources.GetString("textBoxWebURL.ToolTip"));
-         this.textBoxWebURL.TextChanged += new System.EventHandler(this.textBoxWebURL_TextChanged);
-         this.textBoxWebURL.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxWebURL_Validating);
-         // 
-         // textBoxTitle
-         // 
-         resources.ApplyResources(this.textBoxTitle, "textBoxTitle");
-         this.textBoxTitle.Name = "textBoxTitle";
-         this.toolTip.SetToolTip(this.textBoxTitle, resources.GetString("textBoxTitle.ToolTip"));
-         this.textBoxTitle.TextChanged += new System.EventHandler(this.textBoxTitle_TextChanged);
-         this.textBoxTitle.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxTitle_Validating);
-         // 
-         // label6
-         // 
-         resources.ApplyResources(this.label6, "label6");
-         this.label6.Name = "label6";
-         // 
-         // label8
-         // 
-         resources.ApplyResources(this.label8, "label8");
-         this.label8.Name = "label8";
-         // 
-         // label7
-         // 
-         resources.ApplyResources(this.label7, "label7");
-         this.label7.Name = "label7";
-         // 
-         // label10
-         // 
-         resources.ApplyResources(this.label10, "label10");
-         this.label10.Name = "label10";
-         // 
-         // label11
-         // 
-         resources.ApplyResources(this.label11, "label11");
-         this.label11.Name = "label11";
-         // 
-         // label12
-         // 
-         resources.ApplyResources(this.label12, "label12");
-         this.label12.Name = "label12";
-         // 
-         // label9
-         // 
-         resources.ApplyResources(this.label9, "label9");
-         this.label9.Name = "label9";
-         // 
-         // statusBar
-         // 
-         resources.ApplyResources(this.statusBar, "statusBar");
-         this.statusBar.Name = "statusBar";
-         // 
-         // toolStrip
-         // 
-         resources.ApplyResources(this.toolStrip, "toolStrip");
-         this.toolStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-         this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.comboBoxLanguage.Name = "comboBoxLanguage";
+            this.toolTip.SetToolTip(this.comboBoxLanguage, resources.GetString("comboBoxLanguage.ToolTip"));
+            this.comboBoxLanguage.SelectedIndexChanged += new System.EventHandler(this.comboBoxLang_SelectedIndexChanged);
+            // 
+            // cmbHubs
+            // 
+            resources.ApplyResources(this.cmbHubs, "cmbHubs");
+            this.cmbHubs.Items.AddRange(new object[] {
+            resources.GetString("cmbHubs.Items"),
+            resources.GetString("cmbHubs.Items1")});
+            this.cmbHubs.Name = "cmbHubs";
+            this.toolTip.SetToolTip(this.cmbHubs, resources.GetString("cmbHubs.ToolTip"));
+            this.cmbHubs.SelectedIndexChanged += new System.EventHandler(this.cmbHubs_SelectedIndexChanged);
+            // 
+            // textBoxDescription
+            // 
+            resources.ApplyResources(this.textBoxDescription, "textBoxDescription");
+            this.textBoxDescription.Name = "textBoxDescription";
+            this.toolTip.SetToolTip(this.textBoxDescription, resources.GetString("textBoxDescription.ToolTip"));
+            this.textBoxDescription.TextChanged += new System.EventHandler(this.textBoxDescription_TextChanged);
+            this.textBoxDescription.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxDescription_Validating);
+            // 
+            // textBoxWebmaster
+            // 
+            resources.ApplyResources(this.textBoxWebmaster, "textBoxWebmaster");
+            this.textBoxWebmaster.Name = "textBoxWebmaster";
+            this.toolTip.SetToolTip(this.textBoxWebmaster, resources.GetString("textBoxWebmaster.ToolTip"));
+            this.textBoxWebmaster.TextChanged += new System.EventHandler(this.textBoxWebmaster_TextChanged);
+            this.textBoxWebmaster.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxWebmaster_Validating);
+            // 
+            // textBoxEditor
+            // 
+            resources.ApplyResources(this.textBoxEditor, "textBoxEditor");
+            this.textBoxEditor.Name = "textBoxEditor";
+            this.toolTip.SetToolTip(this.textBoxEditor, resources.GetString("textBoxEditor.ToolTip"));
+            this.textBoxEditor.TextChanged += new System.EventHandler(this.textBoxEditor_TextChanged);
+            this.textBoxEditor.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxEditor_Validating);
+            // 
+            // textBoxCopyright
+            // 
+            resources.ApplyResources(this.textBoxCopyright, "textBoxCopyright");
+            this.textBoxCopyright.Name = "textBoxCopyright";
+            this.toolTip.SetToolTip(this.textBoxCopyright, resources.GetString("textBoxCopyright.ToolTip"));
+            this.textBoxCopyright.TextChanged += new System.EventHandler(this.textBoxCopyright_TextChanged);
+            // 
+            // textBoxWebURL
+            // 
+            resources.ApplyResources(this.textBoxWebURL, "textBoxWebURL");
+            this.textBoxWebURL.Name = "textBoxWebURL";
+            this.toolTip.SetToolTip(this.textBoxWebURL, resources.GetString("textBoxWebURL.ToolTip"));
+            this.textBoxWebURL.TextChanged += new System.EventHandler(this.textBoxWebURL_TextChanged);
+            this.textBoxWebURL.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxWebURL_Validating);
+            // 
+            // textBoxTitle
+            // 
+            resources.ApplyResources(this.textBoxTitle, "textBoxTitle");
+            this.textBoxTitle.Name = "textBoxTitle";
+            this.toolTip.SetToolTip(this.textBoxTitle, resources.GetString("textBoxTitle.ToolTip"));
+            this.textBoxTitle.TextChanged += new System.EventHandler(this.textBoxTitle_TextChanged);
+            this.textBoxTitle.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxTitle_Validating);
+            // 
+            // label6
+            // 
+            resources.ApplyResources(this.label6, "label6");
+            this.label6.Name = "label6";
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.Name = "label8";
+            // 
+            // label7
+            // 
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.Name = "label7";
+            // 
+            // label10
+            // 
+            resources.ApplyResources(this.label10, "label10");
+            this.label10.Name = "label10";
+            // 
+            // label11
+            // 
+            resources.ApplyResources(this.label11, "label11");
+            this.label11.Name = "label11";
+            // 
+            // label12
+            // 
+            resources.ApplyResources(this.label12, "label12");
+            this.label12.Name = "label12";
+            // 
+            // label9
+            // 
+            resources.ApplyResources(this.label9, "label9");
+            this.label9.Name = "label9";
+            // 
+            // statusBar
+            // 
+            resources.ApplyResources(this.statusBar, "statusBar");
+            this.statusBar.Name = "statusBar";
+            // 
+            // toolStrip
+            // 
+            resources.ApplyResources(this.toolStrip, "toolStrip");
+            this.toolStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnNew,
             this.btnSave,
             this.toolStripSeparator1,
@@ -1567,105 +1597,105 @@ namespace RSSBuilder
             this.btnSiteManager,
             this.toolStripSeparator3,
             this.btnDonate});
-         this.toolStrip.Name = "toolStrip";
-         // 
-         // btnNew
-         // 
-         this.btnNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-         resources.ApplyResources(this.btnNew, "btnNew");
-         this.btnNew.Name = "btnNew";
-         this.btnNew.Click += new System.EventHandler(this.menuItemNew_Click);
-         // 
-         // btnSave
-         // 
-         this.btnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-         resources.ApplyResources(this.btnSave, "btnSave");
-         this.btnSave.Name = "btnSave";
-         this.btnSave.Click += new System.EventHandler(this.menuItemSave_Click);
-         // 
-         // toolStripSeparator1
-         // 
-         this.toolStripSeparator1.Name = "toolStripSeparator1";
-         resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
-         // 
-         // btnOpen
-         // 
-         this.btnOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-         resources.ApplyResources(this.btnOpen, "btnOpen");
-         this.btnOpen.Name = "btnOpen";
-         this.btnOpen.Click += new System.EventHandler(this.menuItemOpen_Click);
-         // 
-         // btnPreview
-         // 
-         this.btnPreview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-         resources.ApplyResources(this.btnPreview, "btnPreview");
-         this.btnPreview.Name = "btnPreview";
-         this.btnPreview.Click += new System.EventHandler(this.menuItemViewXml_Click);
-         // 
-         // btnDownload
-         // 
-         this.btnDownload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-         resources.ApplyResources(this.btnDownload, "btnDownload");
-         this.btnDownload.Name = "btnDownload";
-         this.btnDownload.Click += new System.EventHandler(this.menuItemDownloadFeed_Click);
-         // 
-         // btnPublish
-         // 
-         this.btnPublish.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-         resources.ApplyResources(this.btnPublish, "btnPublish");
-         this.btnPublish.Name = "btnPublish";
-         this.btnPublish.Click += new System.EventHandler(this.menuItemPublishFeed_Click);
-         // 
-         // toolStripSeparator2
-         // 
-         this.toolStripSeparator2.Name = "toolStripSeparator2";
-         resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
-         // 
-         // btnSiteManager
-         // 
-         this.btnSiteManager.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-         resources.ApplyResources(this.btnSiteManager, "btnSiteManager");
-         this.btnSiteManager.Name = "btnSiteManager";
-         this.btnSiteManager.Click += new System.EventHandler(this.menuItemSiteManager_Click);
-         // 
-         // toolStripSeparator3
-         // 
-         this.toolStripSeparator3.Name = "toolStripSeparator3";
-         resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
-         // 
-         // btnDonate
-         // 
-         this.btnDonate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-         resources.ApplyResources(this.btnDonate, "btnDonate");
-         this.btnDonate.Name = "btnDonate";
-         this.btnDonate.Click += new System.EventHandler(this.btnDonate_Click);
-         // 
-         // imageList
-         // 
-         this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-         this.imageList.TransparentColor = System.Drawing.Color.Silver;
-         this.imageList.Images.SetKeyName(0, "");
-         this.imageList.Images.SetKeyName(1, "");
-         this.imageList.Images.SetKeyName(2, "");
-         this.imageList.Images.SetKeyName(3, "");
-         this.imageList.Images.SetKeyName(4, "");
-         this.imageList.Images.SetKeyName(5, "");
-         this.imageList.Images.SetKeyName(6, "");
-         this.imageList.Images.SetKeyName(7, "");
-         // 
-         // mainMenu
-         // 
-         this.mainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.toolStrip.Name = "toolStrip";
+            // 
+            // btnNew
+            // 
+            this.btnNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.btnNew, "btnNew");
+            this.btnNew.Name = "btnNew";
+            this.btnNew.Click += new System.EventHandler(this.menuItemNew_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.btnSave, "btnSave");
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Click += new System.EventHandler(this.menuItemSave_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
+            // 
+            // btnOpen
+            // 
+            this.btnOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.btnOpen, "btnOpen");
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Click += new System.EventHandler(this.menuItemOpen_Click);
+            // 
+            // btnPreview
+            // 
+            this.btnPreview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.btnPreview, "btnPreview");
+            this.btnPreview.Name = "btnPreview";
+            this.btnPreview.Click += new System.EventHandler(this.menuItemViewXml_Click);
+            // 
+            // btnDownload
+            // 
+            this.btnDownload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.btnDownload, "btnDownload");
+            this.btnDownload.Name = "btnDownload";
+            this.btnDownload.Click += new System.EventHandler(this.menuItemDownloadFeed_Click);
+            // 
+            // btnPublish
+            // 
+            this.btnPublish.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.btnPublish, "btnPublish");
+            this.btnPublish.Name = "btnPublish";
+            this.btnPublish.Click += new System.EventHandler(this.menuItemPublishFeed_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
+            // 
+            // btnSiteManager
+            // 
+            this.btnSiteManager.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.btnSiteManager, "btnSiteManager");
+            this.btnSiteManager.Name = "btnSiteManager";
+            this.btnSiteManager.Click += new System.EventHandler(this.menuItemSiteManager_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
+            // 
+            // btnDonate
+            // 
+            this.btnDonate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.btnDonate, "btnDonate");
+            this.btnDonate.Name = "btnDonate";
+            this.btnDonate.Click += new System.EventHandler(this.btnDonate_Click);
+            // 
+            // imageList
+            // 
+            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+            this.imageList.TransparentColor = System.Drawing.Color.Silver;
+            this.imageList.Images.SetKeyName(0, "");
+            this.imageList.Images.SetKeyName(1, "");
+            this.imageList.Images.SetKeyName(2, "");
+            this.imageList.Images.SetKeyName(3, "");
+            this.imageList.Images.SetKeyName(4, "");
+            this.imageList.Images.SetKeyName(5, "");
+            this.imageList.Images.SetKeyName(6, "");
+            this.imageList.Images.SetKeyName(7, "");
+            // 
+            // mainMenu
+            // 
+            this.mainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItemFile,
             this.menuItem2,
             this.menuItem5,
             this.menuItemSettings,
             this.menuItem6});
-         // 
-         // menuItemFile
-         // 
-         this.menuItemFile.Index = 0;
-         this.menuItemFile.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            // 
+            // menuItemFile
+            // 
+            this.menuItemFile.Index = 0;
+            this.menuItemFile.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItemNew,
             this.menuItemOpen,
             this.menuItemSave,
@@ -1677,265 +1707,277 @@ namespace RSSBuilder
             this.menuItemSaveAsHTML,
             this.menuItem12,
             this.menuItemExit});
-         resources.ApplyResources(this.menuItemFile, "menuItemFile");
-         // 
-         // menuItemNew
-         // 
-         this.menuItemNew.Index = 0;
-         resources.ApplyResources(this.menuItemNew, "menuItemNew");
-         this.menuItemNew.Click += new System.EventHandler(this.menuItemNew_Click);
-         // 
-         // menuItemOpen
-         // 
-         this.menuItemOpen.Index = 1;
-         resources.ApplyResources(this.menuItemOpen, "menuItemOpen");
-         this.menuItemOpen.Click += new System.EventHandler(this.menuItemOpen_Click);
-         // 
-         // menuItemSave
-         // 
-         this.menuItemSave.Index = 2;
-         resources.ApplyResources(this.menuItemSave, "menuItemSave");
-         this.menuItemSave.Click += new System.EventHandler(this.menuItemSave_Click);
-         // 
-         // menuItemSaveAs
-         // 
-         this.menuItemSaveAs.Index = 3;
-         resources.ApplyResources(this.menuItemSaveAs, "menuItemSaveAs");
-         this.menuItemSaveAs.Click += new System.EventHandler(this.menuItemSaveAs_Click);
-         // 
-         // menuItem1
-         // 
-         this.menuItem1.Index = 4;
-         resources.ApplyResources(this.menuItem1, "menuItem1");
-         // 
-         // menuItemDownloadFeed
-         // 
-         this.menuItemDownloadFeed.Index = 5;
-         resources.ApplyResources(this.menuItemDownloadFeed, "menuItemDownloadFeed");
-         this.menuItemDownloadFeed.Click += new System.EventHandler(this.menuItemDownloadFeed_Click);
-         // 
-         // menuItemPublishFeed
-         // 
-         this.menuItemPublishFeed.Index = 6;
-         resources.ApplyResources(this.menuItemPublishFeed, "menuItemPublishFeed");
-         this.menuItemPublishFeed.Click += new System.EventHandler(this.menuItemPublishFeed_Click);
-         // 
-         // menuItem9
-         // 
-         this.menuItem9.Index = 7;
-         resources.ApplyResources(this.menuItem9, "menuItem9");
-         // 
-         // menuItemSaveAsHTML
-         // 
-         this.menuItemSaveAsHTML.Index = 8;
-         resources.ApplyResources(this.menuItemSaveAsHTML, "menuItemSaveAsHTML");
-         this.menuItemSaveAsHTML.Click += new System.EventHandler(this.menuItemSaveAsHTML_Click);
-         // 
-         // menuItem12
-         // 
-         this.menuItem12.Index = 9;
-         resources.ApplyResources(this.menuItem12, "menuItem12");
-         // 
-         // menuItemExit
-         // 
-         this.menuItemExit.Index = 10;
-         resources.ApplyResources(this.menuItemExit, "menuItemExit");
-         this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
-         // 
-         // menuItem2
-         // 
-         this.menuItem2.Index = 1;
-         this.menuItem2.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            resources.ApplyResources(this.menuItemFile, "menuItemFile");
+            // 
+            // menuItemNew
+            // 
+            this.menuItemNew.Index = 0;
+            resources.ApplyResources(this.menuItemNew, "menuItemNew");
+            this.menuItemNew.Click += new System.EventHandler(this.menuItemNew_Click);
+            // 
+            // menuItemOpen
+            // 
+            this.menuItemOpen.Index = 1;
+            resources.ApplyResources(this.menuItemOpen, "menuItemOpen");
+            this.menuItemOpen.Click += new System.EventHandler(this.menuItemOpen_Click);
+            // 
+            // menuItemSave
+            // 
+            this.menuItemSave.Index = 2;
+            resources.ApplyResources(this.menuItemSave, "menuItemSave");
+            this.menuItemSave.Click += new System.EventHandler(this.menuItemSave_Click);
+            // 
+            // menuItemSaveAs
+            // 
+            this.menuItemSaveAs.Index = 3;
+            resources.ApplyResources(this.menuItemSaveAs, "menuItemSaveAs");
+            this.menuItemSaveAs.Click += new System.EventHandler(this.menuItemSaveAs_Click);
+            // 
+            // menuItem1
+            // 
+            this.menuItem1.Index = 4;
+            resources.ApplyResources(this.menuItem1, "menuItem1");
+            // 
+            // menuItemDownloadFeed
+            // 
+            this.menuItemDownloadFeed.Index = 5;
+            resources.ApplyResources(this.menuItemDownloadFeed, "menuItemDownloadFeed");
+            this.menuItemDownloadFeed.Click += new System.EventHandler(this.menuItemDownloadFeed_Click);
+            // 
+            // menuItemPublishFeed
+            // 
+            this.menuItemPublishFeed.Index = 6;
+            resources.ApplyResources(this.menuItemPublishFeed, "menuItemPublishFeed");
+            this.menuItemPublishFeed.Click += new System.EventHandler(this.menuItemPublishFeed_Click);
+            // 
+            // menuItem9
+            // 
+            this.menuItem9.Index = 7;
+            resources.ApplyResources(this.menuItem9, "menuItem9");
+            // 
+            // menuItemSaveAsHTML
+            // 
+            this.menuItemSaveAsHTML.Index = 8;
+            resources.ApplyResources(this.menuItemSaveAsHTML, "menuItemSaveAsHTML");
+            this.menuItemSaveAsHTML.Click += new System.EventHandler(this.menuItemSaveAsHTML_Click);
+            // 
+            // menuItem12
+            // 
+            this.menuItem12.Index = 9;
+            resources.ApplyResources(this.menuItem12, "menuItem12");
+            // 
+            // menuItemExit
+            // 
+            this.menuItemExit.Index = 10;
+            resources.ApplyResources(this.menuItemExit, "menuItemExit");
+            this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
+            // 
+            // menuItem2
+            // 
+            this.menuItem2.Index = 1;
+            this.menuItem2.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItemAddTopic,
             this.menuItemDeleteTopic,
             this.menuItemTopicUp,
             this.menuItemTopicDown});
-         resources.ApplyResources(this.menuItem2, "menuItem2");
-         // 
-         // menuItemAddTopic
-         // 
-         this.menuItemAddTopic.Index = 0;
-         resources.ApplyResources(this.menuItemAddTopic, "menuItemAddTopic");
-         this.menuItemAddTopic.Click += new System.EventHandler(this.menuItemAddTopic_Click);
-         // 
-         // menuItemDeleteTopic
-         // 
-         this.menuItemDeleteTopic.Index = 1;
-         resources.ApplyResources(this.menuItemDeleteTopic, "menuItemDeleteTopic");
-         this.menuItemDeleteTopic.Click += new System.EventHandler(this.menuItemDeleteTopic_Click);
-         // 
-         // menuItemTopicUp
-         // 
-         this.menuItemTopicUp.Index = 2;
-         resources.ApplyResources(this.menuItemTopicUp, "menuItemTopicUp");
-         this.menuItemTopicUp.Click += new System.EventHandler(this.menuItemTopicUp_Click);
-         // 
-         // menuItemTopicDown
-         // 
-         this.menuItemTopicDown.Index = 3;
-         resources.ApplyResources(this.menuItemTopicDown, "menuItemTopicDown");
-         this.menuItemTopicDown.Click += new System.EventHandler(this.menuItemTopicDown_Click);
-         // 
-         // menuItem5
-         // 
-         this.menuItem5.Index = 2;
-         this.menuItem5.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            resources.ApplyResources(this.menuItem2, "menuItem2");
+            // 
+            // menuItemAddTopic
+            // 
+            this.menuItemAddTopic.Index = 0;
+            resources.ApplyResources(this.menuItemAddTopic, "menuItemAddTopic");
+            this.menuItemAddTopic.Click += new System.EventHandler(this.menuItemAddTopic_Click);
+            // 
+            // menuItemDeleteTopic
+            // 
+            this.menuItemDeleteTopic.Index = 1;
+            resources.ApplyResources(this.menuItemDeleteTopic, "menuItemDeleteTopic");
+            this.menuItemDeleteTopic.Click += new System.EventHandler(this.menuItemDeleteTopic_Click);
+            // 
+            // menuItemTopicUp
+            // 
+            this.menuItemTopicUp.Index = 2;
+            resources.ApplyResources(this.menuItemTopicUp, "menuItemTopicUp");
+            this.menuItemTopicUp.Click += new System.EventHandler(this.menuItemTopicUp_Click);
+            // 
+            // menuItemTopicDown
+            // 
+            this.menuItemTopicDown.Index = 3;
+            resources.ApplyResources(this.menuItemTopicDown, "menuItemTopicDown");
+            this.menuItemTopicDown.Click += new System.EventHandler(this.menuItemTopicDown_Click);
+            // 
+            // menuItem5
+            // 
+            this.menuItem5.Index = 2;
+            this.menuItem5.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItemViewToolBar,
             this.menuItemViewFeedProp,
             this.menuItem8,
             this.menuItemViewXml});
-         resources.ApplyResources(this.menuItem5, "menuItem5");
-         // 
-         // menuItemViewToolBar
-         // 
-         this.menuItemViewToolBar.Checked = true;
-         this.menuItemViewToolBar.Index = 0;
-         resources.ApplyResources(this.menuItemViewToolBar, "menuItemViewToolBar");
-         this.menuItemViewToolBar.Click += new System.EventHandler(this.menuItemViewToolBar_Click);
-         // 
-         // menuItemViewFeedProp
-         // 
-         this.menuItemViewFeedProp.Checked = true;
-         this.menuItemViewFeedProp.Index = 1;
-         resources.ApplyResources(this.menuItemViewFeedProp, "menuItemViewFeedProp");
-         this.menuItemViewFeedProp.Click += new System.EventHandler(this.menuItemViewFeedProp_Click);
-         // 
-         // menuItem8
-         // 
-         this.menuItem8.Index = 2;
-         resources.ApplyResources(this.menuItem8, "menuItem8");
-         // 
-         // menuItemViewXml
-         // 
-         this.menuItemViewXml.Index = 3;
-         resources.ApplyResources(this.menuItemViewXml, "menuItemViewXml");
-         this.menuItemViewXml.Click += new System.EventHandler(this.menuItemViewXml_Click);
-         // 
-         // menuItemSettings
-         // 
-         this.menuItemSettings.Index = 3;
-         this.menuItemSettings.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            resources.ApplyResources(this.menuItem5, "menuItem5");
+            // 
+            // menuItemViewToolBar
+            // 
+            this.menuItemViewToolBar.Checked = true;
+            this.menuItemViewToolBar.Index = 0;
+            resources.ApplyResources(this.menuItemViewToolBar, "menuItemViewToolBar");
+            this.menuItemViewToolBar.Click += new System.EventHandler(this.menuItemViewToolBar_Click);
+            // 
+            // menuItemViewFeedProp
+            // 
+            this.menuItemViewFeedProp.Checked = true;
+            this.menuItemViewFeedProp.Index = 1;
+            resources.ApplyResources(this.menuItemViewFeedProp, "menuItemViewFeedProp");
+            this.menuItemViewFeedProp.Click += new System.EventHandler(this.menuItemViewFeedProp_Click);
+            // 
+            // menuItem8
+            // 
+            this.menuItem8.Index = 2;
+            resources.ApplyResources(this.menuItem8, "menuItem8");
+            // 
+            // menuItemViewXml
+            // 
+            this.menuItemViewXml.Index = 3;
+            resources.ApplyResources(this.menuItemViewXml, "menuItemViewXml");
+            this.menuItemViewXml.Click += new System.EventHandler(this.menuItemViewXml_Click);
+            // 
+            // menuItemSettings
+            // 
+            this.menuItemSettings.Index = 3;
+            this.menuItemSettings.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItemSiteManager,
             this.menuItem7});
-         resources.ApplyResources(this.menuItemSettings, "menuItemSettings");
-         // 
-         // menuItemSiteManager
-         // 
-         this.menuItemSiteManager.Index = 0;
-         resources.ApplyResources(this.menuItemSiteManager, "menuItemSiteManager");
-         this.menuItemSiteManager.Click += new System.EventHandler(this.menuItemSiteManager_Click);
-         // 
-         // menuItem7
-         // 
-         this.menuItem7.Index = 1;
-         this.menuItem7.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            resources.ApplyResources(this.menuItemSettings, "menuItemSettings");
+            // 
+            // menuItemSiteManager
+            // 
+            this.menuItemSiteManager.Index = 0;
+            resources.ApplyResources(this.menuItemSiteManager, "menuItemSiteManager");
+            this.menuItemSiteManager.Click += new System.EventHandler(this.menuItemSiteManager_Click);
+            // 
+            // menuItem7
+            // 
+            this.menuItem7.Index = 1;
+            this.menuItem7.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItemEnglish,
             this.menuItemGerman,
             this.menuItemDutch,
             this.menuItemCzech});
-         resources.ApplyResources(this.menuItem7, "menuItem7");
-         // 
-         // menuItemEnglish
-         // 
-         this.menuItemEnglish.Index = 0;
-         resources.ApplyResources(this.menuItemEnglish, "menuItemEnglish");
-         this.menuItemEnglish.Click += new System.EventHandler(this.menuItemEnglish_Click);
-         // 
-         // menuItemGerman
-         // 
-         this.menuItemGerman.Index = 1;
-         resources.ApplyResources(this.menuItemGerman, "menuItemGerman");
-         this.menuItemGerman.Click += new System.EventHandler(this.menuItemGerman_Click);
-         // 
-         // menuItemDutch
-         // 
-         this.menuItemDutch.Index = 2;
-         resources.ApplyResources(this.menuItemDutch, "menuItemDutch");
-         this.menuItemDutch.Click += new System.EventHandler(this.menuItemDutch_Click);
-         // 
-         // menuItemCzech
-         // 
-         this.menuItemCzech.Index = 3;
-         resources.ApplyResources(this.menuItemCzech, "menuItemCzech");
-         this.menuItemCzech.Click += new System.EventHandler(this.menuItemCzech_Click);
-         // 
-         // menuItem6
-         // 
-         this.menuItem6.Index = 4;
-         this.menuItem6.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            resources.ApplyResources(this.menuItem7, "menuItem7");
+            // 
+            // menuItemEnglish
+            // 
+            this.menuItemEnglish.Index = 0;
+            resources.ApplyResources(this.menuItemEnglish, "menuItemEnglish");
+            this.menuItemEnglish.Click += new System.EventHandler(this.menuItemEnglish_Click);
+            // 
+            // menuItemGerman
+            // 
+            this.menuItemGerman.Index = 1;
+            resources.ApplyResources(this.menuItemGerman, "menuItemGerman");
+            this.menuItemGerman.Click += new System.EventHandler(this.menuItemGerman_Click);
+            // 
+            // menuItemDutch
+            // 
+            this.menuItemDutch.Index = 2;
+            resources.ApplyResources(this.menuItemDutch, "menuItemDutch");
+            this.menuItemDutch.Click += new System.EventHandler(this.menuItemDutch_Click);
+            // 
+            // menuItemCzech
+            // 
+            this.menuItemCzech.Index = 3;
+            resources.ApplyResources(this.menuItemCzech, "menuItemCzech");
+            this.menuItemCzech.Click += new System.EventHandler(this.menuItemCzech_Click);
+            // 
+            // menuItem6
+            // 
+            this.menuItem6.Index = 4;
+            this.menuItem6.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItemAbout,
             this.menuItemRSSBuilderWeb});
-         resources.ApplyResources(this.menuItem6, "menuItem6");
-         // 
-         // menuItemAbout
-         // 
-         this.menuItemAbout.Index = 0;
-         resources.ApplyResources(this.menuItemAbout, "menuItemAbout");
-         this.menuItemAbout.Click += new System.EventHandler(this.menuItemAbout_Click);
-         // 
-         // menuItemRSSBuilderWeb
-         // 
-         this.menuItemRSSBuilderWeb.Index = 1;
-         resources.ApplyResources(this.menuItemRSSBuilderWeb, "menuItemRSSBuilderWeb");
-         this.menuItemRSSBuilderWeb.Click += new System.EventHandler(this.menuItemRSSBuilderWeb_Click);
-         // 
-         // openFileDialog
-         // 
-         resources.ApplyResources(this.openFileDialog, "openFileDialog");
-         // 
-         // saveFileDialog
-         // 
-         this.saveFileDialog.DefaultExt = "rss";
-         resources.ApplyResources(this.saveFileDialog, "saveFileDialog");
-         // 
-         // errorProvider
-         // 
-         this.errorProvider.ContainerControl = this;
-         resources.ApplyResources(this.errorProvider, "errorProvider");
-         // 
-         // FormRSSBuilder
-         // 
-         resources.ApplyResources(this, "$this");
-         this.Controls.Add(this.toolStripContainer);
-         this.Menu = this.mainMenu;
-         this.Name = "FormRSSBuilder";
-         this.Load += new System.EventHandler(this.FormRSSBuilder_Load);
-         this.Closed += new System.EventHandler(this.FormRSSBuilder_Closed);
-         this.Closing += new System.ComponentModel.CancelEventHandler(this.FormRSSBuilder_Closing);
-         this.toolStripContainer.ContentPanel.ResumeLayout(false);
-         this.toolStripContainer.TopToolStripPanel.ResumeLayout(false);
-         this.toolStripContainer.TopToolStripPanel.PerformLayout();
-         this.toolStripContainer.ResumeLayout(false);
-         this.toolStripContainer.PerformLayout();
-         this.panelContent.ResumeLayout(false);
-         this.panelRight.ResumeLayout(false);
-         this.splitContainer1.Panel1.ResumeLayout(false);
-         this.splitContainer1.Panel2.ResumeLayout(false);
-         this.splitContainer1.ResumeLayout(false);
-         this.tabControl.ResumeLayout(false);
-         this.tabPageGeneral.ResumeLayout(false);
-         this.panelItemProperties.ResumeLayout(false);
-         this.panelItemProperties.PerformLayout();
-         ((System.ComponentModel.ISupportInitialize)(this.numTimeOffset)).EndInit();
-         this.tabPageEnclosure.ResumeLayout(false);
-         this.tabPageEnclosure.PerformLayout();
-         this.tabPageAdvanced.ResumeLayout(false);
-         this.tabPageAdvanced.PerformLayout();
-         this.tableLayoutPanelAdvanced.ResumeLayout(false);
-         this.tableLayoutPanelAdvanced.PerformLayout();
-         this.toolStripItems.ResumeLayout(false);
-         this.toolStripItems.PerformLayout();
-         this.panelLeft.ResumeLayout(false);
-         this.groupBox3.ResumeLayout(false);
-         this.groupBox3.PerformLayout();
-         this.groupBox2.ResumeLayout(false);
-         this.groupBox2.PerformLayout();
-         this.groupBox1.ResumeLayout(false);
-         this.groupBox1.PerformLayout();
-         this.toolStrip.ResumeLayout(false);
-         this.toolStrip.PerformLayout();
-         ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-         this.ResumeLayout(false);
+            resources.ApplyResources(this.menuItem6, "menuItem6");
+            // 
+            // menuItemAbout
+            // 
+            this.menuItemAbout.Index = 0;
+            resources.ApplyResources(this.menuItemAbout, "menuItemAbout");
+            this.menuItemAbout.Click += new System.EventHandler(this.menuItemAbout_Click);
+            // 
+            // menuItemRSSBuilderWeb
+            // 
+            this.menuItemRSSBuilderWeb.Index = 1;
+            resources.ApplyResources(this.menuItemRSSBuilderWeb, "menuItemRSSBuilderWeb");
+            this.menuItemRSSBuilderWeb.Click += new System.EventHandler(this.menuItemRSSBuilderWeb_Click);
+            // 
+            // openFileDialog
+            // 
+            resources.ApplyResources(this.openFileDialog, "openFileDialog");
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.DefaultExt = "rss";
+            resources.ApplyResources(this.saveFileDialog, "saveFileDialog");
+            // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
+            resources.ApplyResources(this.errorProvider, "errorProvider");
+            // 
+            // textBoxFeedURL
+            // 
+            resources.ApplyResources(this.textBoxFeedURL, "textBoxFeedURL");
+            this.textBoxFeedURL.Name = "textBoxFeedURL";
+            this.toolTip.SetToolTip(this.textBoxFeedURL, resources.GetString("textBoxFeedURL.ToolTip"));
+            this.textBoxFeedURL.TextChanged += new System.EventHandler(this.textBoxFeedURL_TextChanged);
+            // 
+            // lblFeedURL
+            // 
+            resources.ApplyResources(this.lblFeedURL, "lblFeedURL");
+            this.lblFeedURL.Name = "lblFeedURL";
+            // 
+            // FormRSSBuilder
+            // 
+            resources.ApplyResources(this, "$this");
+            this.Controls.Add(this.toolStripContainer);
+            this.Menu = this.mainMenu;
+            this.Name = "FormRSSBuilder";
+            this.Closing += new System.ComponentModel.CancelEventHandler(this.FormRSSBuilder_Closing);
+            this.Closed += new System.EventHandler(this.FormRSSBuilder_Closed);
+            this.Load += new System.EventHandler(this.FormRSSBuilder_Load);
+            this.toolStripContainer.ContentPanel.ResumeLayout(false);
+            this.toolStripContainer.TopToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer.TopToolStripPanel.PerformLayout();
+            this.toolStripContainer.ResumeLayout(false);
+            this.toolStripContainer.PerformLayout();
+            this.panelContent.ResumeLayout(false);
+            this.panelRight.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
+            this.tabPageGeneral.ResumeLayout(false);
+            this.panelItemProperties.ResumeLayout(false);
+            this.panelItemProperties.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTimeOffset)).EndInit();
+            this.tabPageEnclosure.ResumeLayout(false);
+            this.tabPageEnclosure.PerformLayout();
+            this.tabPageAdvanced.ResumeLayout(false);
+            this.tabPageAdvanced.PerformLayout();
+            this.tableLayoutPanelAdvanced.ResumeLayout(false);
+            this.tableLayoutPanelAdvanced.PerformLayout();
+            this.toolStripItems.ResumeLayout(false);
+            this.toolStripItems.PerformLayout();
+            this.panelLeft.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.toolStrip.ResumeLayout(false);
+            this.toolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+            this.ResumeLayout(false);
 
       }
       #endregion
@@ -2643,8 +2685,19 @@ namespace RSSBuilder
 
       private void buttonUseLinkAsGuid_Click(object sender, EventArgs e)
       {
-         textGUID.Text = textLink.Text;
-         checkPermaLink.Checked = true;
+          if (string.IsNullOrEmpty(textLink.Text))
+          {
+              // set the entry's GUID
+              textGUID.Text = Guid.NewGuid().ToString();
+              checkPermaLink.Checked = false;
+              textLink.BackColor = SystemColors.InactiveCaption; // don't disable, just visually
+          }
+          else
+          {
+              // use this entry URL as its permalink/GUID
+              textGUID.Text = textLink.Text;
+              checkPermaLink.Checked = true;
+          }
       }
 
       private void btnUploadEnclosure_Click(object sender, EventArgs e)
@@ -2676,6 +2729,20 @@ namespace RSSBuilder
          {
          }
       }
+
+      private void textBoxFeedURL_TextChanged(object sender, EventArgs e)
+      {
+          _rssFeed.FeedURL = textBoxFeedURL.Text;
+          _changed = true;
+      }
+
+      private void cmbHubs_SelectedIndexChanged(object sender, EventArgs e)
+      {
+          _rssFeed.HubURL = cmbHubs.Text;
+          _changed = true;
+      }
+
+
 
 
 

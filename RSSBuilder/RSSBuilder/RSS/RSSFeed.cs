@@ -15,6 +15,10 @@ namespace RSSBuilder
    {
       private string title = "";
       private string webURL = "";
+      private string feedURL = "";
+      private string hubURL = "";
+
+
       private string copyright = "";
       private string language = "en-us";
       private string editor = "";
@@ -46,10 +50,20 @@ namespace RSSBuilder
          set { title = value; }
       }
 
+      public string FeedURL
+      {
+          get { return feedURL; }
+          set { feedURL = value; }
+      }
+      public string HubURL
+      {
+          get { return hubURL; }
+          set { hubURL = value; }
+      }
       public string WebURL
       {
-         get { return webURL; }
-         set { webURL = value; }
+          get { return webURL; }
+          set { webURL = value; }
       }
 
       public string Copyright
@@ -190,6 +204,7 @@ namespace RSSBuilder
 
          w.WriteStartElement("rss");
          w.WriteAttributeString("version", "2.0");
+         w.WriteAttributeString("xmlns", "atom", null, "http://www.w3.org/2005/Atom"); // <rss xmlns:atom="http://www.w3.org/2005/Atom">
 
          if(FtpSite != "") w.WriteComment("FTPSite " + FtpSite);
         // w.WriteComment("Created by RSS Builder (http://home.hetnet.nl/~bsoft/rssbuilder)");
@@ -198,6 +213,25 @@ namespace RSSBuilder
          w.WriteElementString("generator", "RSS Builder by B!Soft");
          w.WriteElementString("title", title);
          w.WriteElementString("link", webURL);
+
+         if (!string.IsNullOrEmpty(feedURL) && feedURL.StartsWith("http"))
+         {
+             // <atom:link rel="self" href="http://example.tld/news.rss" type="application/rss+xml" />
+             w.WriteStartElement("atom", "link", null);
+             w.WriteAttributeString("rel", "self");
+             w.WriteAttributeString("href", feedURL);
+             w.WriteAttributeString("type", "application/rss+xml");
+             w.WriteEndElement();
+         }
+
+         if (!string.IsNullOrEmpty(hubURL) && hubURL.StartsWith("http"))
+         {
+             // <atom:link rel="hub" href="http://pubsubhubbub.appspot.com/" />
+             w.WriteStartElement("atom", "link", null);
+             w.WriteAttributeString("rel", "hub");
+             w.WriteAttributeString("href", hubURL);
+             w.WriteEndElement();
+         }
 
          //Encoding isoEncoding = Encoding.GetEncoding("ISO-8859-1");
          //byte[] utfDescription = Encoding.UTF8.GetBytes(description);
@@ -393,6 +427,27 @@ namespace RSSBuilder
          return elemNode.InnerText;
       }
 
+
+       /// <remarks><atom:link rel="hub" href="http://pubsubhubbub.appspot.com/" /></remarks>
+      private string getAtomElem(XmlNode node, string relation)
+      {
+          if (node == null)
+              return "";
+
+          XmlNamespaceManager nsmgr = new XmlNamespaceManager(node.OwnerDocument.NameTable);
+          nsmgr.AddNamespace("at", "http://www.w3.org/2005/Atom");
+          XmlNodeList atomLinks = node.SelectNodes("at:link", nsmgr);
+
+          foreach (XmlNode atomLink in atomLinks)
+          {
+              var rel = atomLink.Attributes["rel"];
+              if (rel != null && rel.Value == relation)
+                  return atomLink.Attributes["href"].Value;
+          }
+
+          return "";
+      }
+
       public bool openFeed(string fileName)
       {
          XmlDocument xmlDoc = new XmlDocument();
@@ -440,6 +495,9 @@ namespace RSSBuilder
 
          title = getSubElem(channel, "title");
          webURL = getSubElem(channel, "link");
+         feedURL = getAtomElem(channel, "self");
+         hubURL = getAtomElem(channel, "hub");
+
          description = getSubElem(channel,"description");
          language = getSubElem(channel,"language");
          editor = getSubElem(channel,"managingEditor");
@@ -515,6 +573,7 @@ namespace RSSBuilder
 
          return true;
       }
+
 
       private string getTZFromDate(string date)
       {
