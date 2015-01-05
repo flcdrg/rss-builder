@@ -36,28 +36,38 @@ namespace RSSBuilder
       private System.Windows.Forms.ComboBox comboSites;
       private System.Windows.Forms.Button buttonSiteManager;
       private System.Windows.Forms.Label label1;
+      private Button buttonNotify;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
-		public FormFTPPublish(RSSFeed theRssFeed, string defaultSiteName)
-		{
-			//
-			// Required for Windows Form Designer support
-			//
-			InitializeComponent();
+        public FormFTPPublish(RSSFeed theRssFeed, string defaultSiteName)
+        {
+            //
+            // Required for Windows Form Designer support
+            //
+            InitializeComponent();
 
-         rssFeed = theRssFeed;
-         numItemCount.Value = rssFeed.NewsItemCount;
-         numItemCount.Maximum = rssFeed.NewsItemCount;
+            rssFeed = theRssFeed;
+            numItemCount.Value = rssFeed.NewsItemCount;
+            numItemCount.Maximum = rssFeed.NewsItemCount;
 
-         readFTPConfiguration();
+            readFTPConfiguration();
 
-         int selIdx = comboSites.Items.IndexOf(defaultSiteName);
-         if(selIdx != -1)
-           comboSites.SelectedIndex = selIdx;
-		}
+            int selIdx = comboSites.Items.IndexOf(defaultSiteName);
+            if (selIdx != -1)
+                comboSites.SelectedIndex = selIdx;
+
+            if (!string.IsNullOrEmpty(rssFeed.HubURL) && rssFeed.HubURL.StartsWith("http"))
+            {
+                buttonNotify.Enabled = true;
+            }
+            else
+            {
+                buttonNotify.Enabled = false;
+            }
+        }
 
       private void readFTPConfiguration()
       {
@@ -102,146 +112,120 @@ namespace RSSBuilder
 		/// </summary>
 		private void InitializeComponent()
 		{
-         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormFTPPublish));
-         this.label7 = new System.Windows.Forms.Label();
-         this.buttonPublish = new System.Windows.Forms.Button();
-         this.progressBar = new System.Windows.Forms.ProgressBar();
-         this.buttonCancel = new System.Windows.Forms.Button();
-         this.numItemCount = new System.Windows.Forms.NumericUpDown();
-         this.labelMsg = new System.Windows.Forms.Label();
-         this.comboSites = new System.Windows.Forms.ComboBox();
-         this.buttonSiteManager = new System.Windows.Forms.Button();
-         this.label1 = new System.Windows.Forms.Label();
-         ((System.ComponentModel.ISupportInitialize)(this.numItemCount)).BeginInit();
-         this.SuspendLayout();
-         // 
-         // label7
-         // 
-         this.label7.AccessibleDescription = null;
-         this.label7.AccessibleName = null;
-         resources.ApplyResources(this.label7, "label7");
-         this.label7.Font = null;
-         this.label7.Name = "label7";
-         this.label7.Click += new System.EventHandler(this.label7_Click);
-         // 
-         // buttonPublish
-         // 
-         this.buttonPublish.AccessibleDescription = null;
-         this.buttonPublish.AccessibleName = null;
-         resources.ApplyResources(this.buttonPublish, "buttonPublish");
-         this.buttonPublish.BackgroundImage = null;
-         this.buttonPublish.DialogResult = System.Windows.Forms.DialogResult.OK;
-         this.buttonPublish.Font = null;
-         this.buttonPublish.Name = "buttonPublish";
-         this.buttonPublish.Click += new System.EventHandler(this.buttonPublish_Click);
-         // 
-         // progressBar
-         // 
-         this.progressBar.AccessibleDescription = null;
-         this.progressBar.AccessibleName = null;
-         resources.ApplyResources(this.progressBar, "progressBar");
-         this.progressBar.BackgroundImage = null;
-         this.progressBar.Font = null;
-         this.progressBar.Maximum = 5;
-         this.progressBar.Name = "progressBar";
-         this.progressBar.Step = 1;
-         this.progressBar.Click += new System.EventHandler(this.progressBar_Click);
-         // 
-         // buttonCancel
-         // 
-         this.buttonCancel.AccessibleDescription = null;
-         this.buttonCancel.AccessibleName = null;
-         resources.ApplyResources(this.buttonCancel, "buttonCancel");
-         this.buttonCancel.BackgroundImage = null;
-         this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-         this.buttonCancel.Font = null;
-         this.buttonCancel.Name = "buttonCancel";
-         this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
-         // 
-         // numItemCount
-         // 
-         this.numItemCount.AccessibleDescription = null;
-         this.numItemCount.AccessibleName = null;
-         resources.ApplyResources(this.numItemCount, "numItemCount");
-         this.numItemCount.Font = null;
-         this.numItemCount.Maximum = new decimal(new int[] {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormFTPPublish));
+            this.label7 = new System.Windows.Forms.Label();
+            this.buttonPublish = new System.Windows.Forms.Button();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            this.numItemCount = new System.Windows.Forms.NumericUpDown();
+            this.labelMsg = new System.Windows.Forms.Label();
+            this.comboSites = new System.Windows.Forms.ComboBox();
+            this.buttonSiteManager = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.buttonNotify = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.numItemCount)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // label7
+            // 
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.Name = "label7";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
+            // 
+            // buttonPublish
+            // 
+            this.buttonPublish.DialogResult = System.Windows.Forms.DialogResult.OK;
+            resources.ApplyResources(this.buttonPublish, "buttonPublish");
+            this.buttonPublish.Name = "buttonPublish";
+            this.buttonPublish.Click += new System.EventHandler(this.buttonPublish_Click);
+            // 
+            // progressBar
+            // 
+            resources.ApplyResources(this.progressBar, "progressBar");
+            this.progressBar.Maximum = 5;
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Step = 1;
+            this.progressBar.Click += new System.EventHandler(this.progressBar_Click);
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            resources.ApplyResources(this.buttonCancel, "buttonCancel");
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            // 
+            // numItemCount
+            // 
+            resources.ApplyResources(this.numItemCount, "numItemCount");
+            this.numItemCount.Maximum = new decimal(new int[] {
             99999999,
             0,
             0,
             0});
-         this.numItemCount.Name = "numItemCount";
-         this.numItemCount.Value = new decimal(new int[] {
+            this.numItemCount.Name = "numItemCount";
+            this.numItemCount.Value = new decimal(new int[] {
             20,
             0,
             0,
             0});
-         this.numItemCount.ValueChanged += new System.EventHandler(this.numItemCount_ValueChanged);
-         // 
-         // labelMsg
-         // 
-         this.labelMsg.AccessibleDescription = null;
-         this.labelMsg.AccessibleName = null;
-         resources.ApplyResources(this.labelMsg, "labelMsg");
-         this.labelMsg.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-         this.labelMsg.Font = null;
-         this.labelMsg.Name = "labelMsg";
-         this.labelMsg.Click += new System.EventHandler(this.labelMsg_Click);
-         // 
-         // comboSites
-         // 
-         this.comboSites.AccessibleDescription = null;
-         this.comboSites.AccessibleName = null;
-         resources.ApplyResources(this.comboSites, "comboSites");
-         this.comboSites.BackgroundImage = null;
-         this.comboSites.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-         this.comboSites.Font = null;
-         this.comboSites.Name = "comboSites";
-         this.comboSites.SelectedIndexChanged += new System.EventHandler(this.comboSites_SelectedIndexChanged);
-         // 
-         // buttonSiteManager
-         // 
-         this.buttonSiteManager.AccessibleDescription = null;
-         this.buttonSiteManager.AccessibleName = null;
-         resources.ApplyResources(this.buttonSiteManager, "buttonSiteManager");
-         this.buttonSiteManager.BackgroundImage = null;
-         this.buttonSiteManager.Font = null;
-         this.buttonSiteManager.Name = "buttonSiteManager";
-         this.buttonSiteManager.Click += new System.EventHandler(this.buttonSiteManager_Click);
-         // 
-         // label1
-         // 
-         this.label1.AccessibleDescription = null;
-         this.label1.AccessibleName = null;
-         resources.ApplyResources(this.label1, "label1");
-         this.label1.Font = null;
-         this.label1.Name = "label1";
-         this.label1.Click += new System.EventHandler(this.label1_Click);
-         // 
-         // FormFTPPublish
-         // 
-         this.AcceptButton = this.buttonPublish;
-         this.AccessibleDescription = null;
-         this.AccessibleName = null;
-         resources.ApplyResources(this, "$this");
-         this.BackgroundImage = null;
-         this.CancelButton = this.buttonCancel;
-         this.Controls.Add(this.label1);
-         this.Controls.Add(this.buttonSiteManager);
-         this.Controls.Add(this.comboSites);
-         this.Controls.Add(this.labelMsg);
-         this.Controls.Add(this.numItemCount);
-         this.Controls.Add(this.buttonCancel);
-         this.Controls.Add(this.progressBar);
-         this.Controls.Add(this.buttonPublish);
-         this.Controls.Add(this.label7);
-         this.Font = null;
-         this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-         this.MaximizeBox = false;
-         this.MinimizeBox = false;
-         this.Name = "FormFTPPublish";
-         this.ShowInTaskbar = false;
-         ((System.ComponentModel.ISupportInitialize)(this.numItemCount)).EndInit();
-         this.ResumeLayout(false);
+            this.numItemCount.ValueChanged += new System.EventHandler(this.numItemCount_ValueChanged);
+            // 
+            // labelMsg
+            // 
+            this.labelMsg.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            resources.ApplyResources(this.labelMsg, "labelMsg");
+            this.labelMsg.Name = "labelMsg";
+            this.labelMsg.Click += new System.EventHandler(this.labelMsg_Click);
+            // 
+            // comboSites
+            // 
+            this.comboSites.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            resources.ApplyResources(this.comboSites, "comboSites");
+            this.comboSites.Name = "comboSites";
+            this.comboSites.SelectedIndexChanged += new System.EventHandler(this.comboSites_SelectedIndexChanged);
+            // 
+            // buttonSiteManager
+            // 
+            resources.ApplyResources(this.buttonSiteManager, "buttonSiteManager");
+            this.buttonSiteManager.Name = "buttonSiteManager";
+            this.buttonSiteManager.Click += new System.EventHandler(this.buttonSiteManager_Click);
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // buttonNotify
+            // 
+            this.buttonNotify.DialogResult = System.Windows.Forms.DialogResult.OK;
+            resources.ApplyResources(this.buttonNotify, "buttonNotify");
+            this.buttonNotify.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.buttonNotify.Name = "buttonNotify";
+            this.buttonNotify.Click += new System.EventHandler(this.buttonNotify_Click);
+            // 
+            // FormFTPPublish
+            // 
+            this.AcceptButton = this.buttonPublish;
+            resources.ApplyResources(this, "$this");
+            this.CancelButton = this.buttonCancel;
+            this.Controls.Add(this.buttonNotify);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.buttonSiteManager);
+            this.Controls.Add(this.comboSites);
+            this.Controls.Add(this.labelMsg);
+            this.Controls.Add(this.numItemCount);
+            this.Controls.Add(this.buttonCancel);
+            this.Controls.Add(this.progressBar);
+            this.Controls.Add(this.buttonPublish);
+            this.Controls.Add(this.label7);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "FormFTPPublish";
+            this.ShowInTaskbar = false;
+            ((System.ComponentModel.ISupportInitialize)(this.numItemCount)).EndInit();
+            this.ResumeLayout(false);
 
       }
 		#endregion
@@ -415,6 +399,36 @@ namespace RSSBuilder
       private void label1_Click(object sender, EventArgs e)
       {
 
+      }
+
+      private void buttonNotify_Click(object sender, EventArgs e)
+      {
+          
+
+          using (var client = new System.Net.WebClient())
+          {
+              client.Headers["User-Agent"] = "RSS Builder by B!Soft";
+
+
+              switch (rssFeed.HubURL)
+              {
+                  case "https://pubsubhubbub.appspot.com/":
+                      var values = new System.Collections.Specialized.NameValueCollection();
+                      values["hub.mode"] = "publish";
+                      values["hub.url"] = rssFeed.FeedURL;
+
+                      var response = client.UploadValues("https://pubsubhubbub.appspot.com/publish", values);
+
+                      var responseString = System.Text.Encoding.UTF8.GetString(response); // submission will result in a HTTP 204 response to acknowledge
+                      break;
+
+                  case "https://pubsubhubbub.superfeedr.com/":
+                      break;
+              }
+              
+
+              
+          }
       }
 
 
